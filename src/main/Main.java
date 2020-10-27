@@ -12,7 +12,7 @@ public class Main {
 			Team blue = new Team(charlie);
 			System.out.println(i + ":\t" + simulate2(red, blue, battles)*100.0/battles);
 		}*/
-		Character alice = new Character("Alice", 3.75);
+		Character alice = new Character("Alice", 3.93);
 		alice.minion = true;
 		Character bob = new Character("Bob");
 		System.out.println(simulate(alice,bob,battles)*100.0/battles);

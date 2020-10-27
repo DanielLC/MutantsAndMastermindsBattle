@@ -25,4 +25,4 @@ Someone ahead by one PL wins 72% of the time.
 
 * One character with a side kick 3.1 levels lower is evenly matched against someone one power level higher than them. For example, if you're in a PL 10 game you'd be balanced playing as someone PL 9 with a PL 6 side kick.
 
-* A minion is even against someone 3.75 power levels lower.
+* A minion is even against someone 3.93 power levels lower.

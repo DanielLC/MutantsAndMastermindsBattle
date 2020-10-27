@@ -36,8 +36,24 @@ public class Character implements Comparable<Character> {
 	}
 	
 	public boolean attack(Character target) {
+		if(!minion && target.minion) {
+			if(attack > target.activeDefense) {
+				print(name + " hit " + target + ", minion, as a routine check");
+				return target.takeHit(damage);
+			}
+			double roll = 1+Math.random()*20;
+			if(roll >= 20 &&  attack != Double.MAX_VALUE) {
+				print(name + " critically hit " + target + ", minion, defeating them instantly");
+				return target.incapacitate();
+			}
+			if(roll + attack > target.activeDefense + 10) {
+				print(name + " hit " + target.name);
+				return target.takeHit(damage);
+			}
+			return false;
+		}
 		double roll = 1+Math.random()*20;
-		if(roll >= 20 && attack != Double.MAX_VALUE) {		//If they have a Perception attack, there's no natural 20's
+		if(roll >= 20 && attack != Double.MAX_VALUE && !(minion && !target.minion)) {		//If they have a Perception attack, there's no natural 20's. And minions don't get critical hits on non-minions.
 			print(name + " critically hit " + target.name);
 			return target.takeHit(damage + 5);
 		}
