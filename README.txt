@@ -26,3 +26,11 @@ Someone ahead by one PL wins 72% of the time.
 * One character with a side kick 3.1 levels lower is evenly matched against someone one power level higher than them. For example, if you're in a PL 10 game you'd be balanced playing as someone PL 9 with a PL 6 side kick.
 
 * A minion is even against someone 3.93 power levels lower.
+
+* Multiattack against a single target lets you win 51.4% of the time.
+
+* Two on two, both characters having multiattack is worth a PL difference of 0.4
+
+* Four on four, all the characters having multiattack is worth a PL difference of 1
+
+* One character with multiattack is balanced against four that are 3.8 PL lower (as opposed to 4.85).

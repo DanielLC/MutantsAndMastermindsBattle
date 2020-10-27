@@ -8,10 +8,22 @@ public class Character implements Comparable<Character> {
 	public double damage;
 	public int bruises;
 	public boolean minion = false;
+	public boolean multiattack = false;
 	public boolean staggered = false;
 	public boolean incapacitated = false;
 	public Team team = null;
 	public static boolean verbose = false;
+	
+	public Character(Character c, Team team) {
+		this.name = c.name;
+		this.activeDefense = c.activeDefense;
+		this.toughness = c.toughness;
+		this.attack = c.attack;
+		this.damage = c.damage;
+		this.minion = c.minion;
+		this.multiattack = c.multiattack;
+		this.team = team;
+	}
 	
 	public Character(String name, double activeDefense, double toughness, double attack, double damage) {
 		this.name = name;
@@ -29,13 +41,17 @@ public class Character implements Comparable<Character> {
 		this(name, powerLevel, powerLevel, powerLevel, powerLevel);
 	}
 	
+	public Character(double powerLevel) {
+		this("", powerLevel, powerLevel, powerLevel, powerLevel);
+	}
+	
 	public void reset() {
 		bruises = 0;
 		staggered = false;
 		incapacitated = false;
 	}
 	
-	public boolean attack(Character target) {
+	public boolean attack(Character target, double damage, boolean multiattackSingleTarget) {
 		if(!minion && target.minion) {
 			if(attack > target.activeDefense) {
 				print(name + " hit " + target + ", minion, as a routine check");
@@ -46,26 +62,65 @@ public class Character implements Comparable<Character> {
 				print(name + " critically hit " + target + ", minion, defeating them instantly");
 				return target.incapacitate();
 			}
-			if(roll + attack > target.activeDefense + 10) {
+			double successValue = roll + attack - (target.activeDefense + 10);
+			if(successValue >= 0) {
+				if(multiattackSingleTarget) {
+					if(successValue >= 15)
+						damage += 5;
+					else if(successValue >= 10)
+						damage += 2;
+				}
 				print(name + " hit " + target.name);
 				return target.takeHit(damage);
 			}
 			return false;
 		}
 		double roll = 1+Math.random()*20;
+		boolean natural20 = false;
 		if(roll >= 20 && attack != Double.MAX_VALUE && !(minion && !target.minion)) {		//If they have a Perception attack, there's no natural 20's. And minions don't get critical hits on non-minions.
-			print(name + " critically hit " + target.name);
-			return target.takeHit(damage + 5);
+			print("Critical");
+			damage += 5;
+			natural20 = true;
 		}
-		if(roll + attack > target.activeDefense + 10) {
+		double successValue = roll + attack - (target.activeDefense + 10);
+		if(successValue >= 0 || natural20) {
+			if(multiattackSingleTarget) {
+				if(successValue >= 15)
+					damage += 5;
+				else if(successValue >= 10)
+					damage += 2;
+			}
 			print(name + " hit " + target.name);
 			return target.takeHit(damage);
 		}
 		print(name + " missed " + target.name);
 		return false;
 	}
+
+	public boolean attack(Character target, boolean multiattackSingleTarget) {
+		return attack(target, damage, multiattackSingleTarget);
+	}
+
+	public boolean attack(Character target, double damage) {
+		return attack(target, damage, multiattack && target.team == null);
+	}
+	
+	public boolean attack(Character target) {
+		return attack(target, damage, multiattack && target.team == null);
+	}
 	
 	public boolean attack(Team target) {
+		if(multiattack) {
+			int n = target.getMembersRemaining();
+			if(n > 0) {
+				for(Character targetC : target.getAllTargets()) {
+					attack(targetC, damage-n);
+				}
+				return target.getMembersRemaining() == 0;
+			} else {
+				return attack(target.getTarget(), true);
+			}
+		}
 		return attack(target.getTarget());
 	}
 	

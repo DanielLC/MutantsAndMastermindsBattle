@@ -3,7 +3,7 @@ package main;
 public class Main {
 	public static void main(String[] args) {
 		//Character.verbose = true;
-		int battles = 1000000;
+		int battles = 100000;
 		/*for(double i=-4; i<=-3; i += 0.1) {
 			Character alice = new Character("Alice");
 			Character bob = new Character("Bob", i);
@@ -12,16 +12,16 @@ public class Main {
 			Team blue = new Team(charlie);
 			System.out.println(i + ":\t" + simulate2(red, blue, battles)*100.0/battles);
 		}*/
-		Character alice = new Character("Alice", 3.93);
-		alice.minion = true;
-		Character bob = new Character("Bob");
-		System.out.println(simulate(alice,bob,battles)*100.0/battles);
 		/*Character alice = new Character("Alice");
+		alice.multiattack = true;
 		Character bob = new Character("Bob");
-		Character charlie = new Character("Charlie", 2.31);
-		Team red = new Team(alice, bob);
-		Team blue = new Team(charlie);
-		System.out.println(simulate2(red, blue, battles)*100.0/battles);*/
+		System.out.println(simulate(alice,bob,battles)*100.0/battles);*/
+		Character alice = new Character("Alice");
+		alice.multiattack = true;
+		Character bob = new Character("Bob",-3.8);
+		Team red = new Team(alice);
+		Team blue = new Team(bob, 4);
+		System.out.println(simulate2(red, blue, battles)*100.0/battles);
 		/*Character alice = new Character("Alice");
 		Character bob = new Character("Bob");
 		bob.minion = true;
@@ -68,8 +68,6 @@ public class Main {
 	
 	//TODO
 	public static int simulate2(Team red, Team blue, int battles) {
-		//System.out.println(red);
-		//System.out.println(blue);
 		red.enemyTeam = blue;
 		blue.enemyTeam = red;
 		int redWins = 0;

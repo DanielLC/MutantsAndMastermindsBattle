@@ -16,6 +16,13 @@ public class Team {
 			character.team = this;
 		}
 	}
+	public Team(Character base, int copies) {
+		members = new ArrayList<Character>(copies);
+		membersRemaining = copies;
+		for(int i=0; i<copies; ++i) {
+			members.add(new Character(base, this));
+		}
+	}
 	public Team() {
 		this.members = new ArrayList<Character>();
 		i = 0;
@@ -40,6 +47,16 @@ public class Team {
 		}
 		return members.get(i);
 	}
+	public Character[] getAllTargets() {	//Returns up to n targets. Useful for multi-attack and area attacks.
+		Character[] characters = new Character[membersRemaining];
+		for(int j=0; j<membersRemaining; ++j) {
+			while(members.get(i).incapacitated) {
+				i = (i+1)%members.size();
+			}
+			characters[j] = members.get(i);
+		}
+		return characters;
+	}
 	public boolean loseMember() {
 		--membersRemaining;
 		return membersRemaining <= 0;
@@ -50,5 +67,8 @@ public class Team {
 			s += c + "\n";
 		}
 		return s;
+	}
+	public int getMembersRemaining() {
+		return membersRemaining;
 	}
 }
