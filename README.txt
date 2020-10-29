@@ -4,6 +4,8 @@ gui.GUI is the main file to run if you want to use the GUI. main.Main is there f
 
 If you aren't familiar with programming, you can just download battleSim.jar and run that to use the GUI.
 
+The battles randomize the turns, but assume you attack the members in the opposing team in order. This lets you test out who to target first, but is a problem if you want a non-optimal game where characters attack each other more randomly. I'll probably add that as option eventually.
+
 Here's some things I've found so far:
 
 * The character who goes first wins 53% of the time.
@@ -34,3 +36,7 @@ Someone ahead by one PL wins 72% of the time.
 * Four on four, all the characters having multiattack is worth a PL difference of 1
 
 * One character with multiattack is balanced against four that are 3.8 PL lower (as opposed to 4.85).
+
+* All else being equal, attacking stronger characters first is better, but it's extremely minor. If two pairs fight, with a PL difference of 10 attacking the strongest first wins 58% of the time. And it gradually increases to approach that.
+
+* If the weaker character is additionally a minion, it's better to go for the minion first if they're even (winning 69% of the time), but as the minions get weaker this gets less useful, with it not mattering who you attack at 6 power levels, and after that you're actually better off killing the stronger enemy first.

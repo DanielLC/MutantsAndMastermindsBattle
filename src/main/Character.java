@@ -9,6 +9,7 @@ public class Character implements Comparable<Character> {
 	public int bruises;
 	public boolean minion = false;
 	public boolean multiattack = false;
+	public boolean selectiveArea = false;
 	public boolean staggered = false;
 	public boolean incapacitated = false;
 	public Team team = null;
@@ -51,7 +52,7 @@ public class Character implements Comparable<Character> {
 		incapacitated = false;
 	}
 	
-	public boolean attack(Character target, double damage, boolean multiattackSingleTarget) {
+	private boolean attack(Character target, double damage, boolean multiattackSingleTarget) {
 		if(!minion && target.minion) {
 			if(attack > target.activeDefense) {
 				print(name + " hit " + target + ", minion, as a routine check");
@@ -97,22 +98,22 @@ public class Character implements Comparable<Character> {
 		return false;
 	}
 
-	public boolean attack(Character target, boolean multiattackSingleTarget) {
+	private boolean attack(Character target, boolean multiattackSingleTarget) {
 		return attack(target, damage, multiattackSingleTarget);
 	}
 
-	public boolean attack(Character target, double damage) {
-		return attack(target, damage, multiattack && target.team == null);
+	private boolean attack(Character target, double damage) {
+		return attack(target, damage, false);
 	}
 	
-	public boolean attack(Character target) {
-		return attack(target, damage, multiattack && target.team == null);
+	private boolean attack(Character target) {
+		return attack(target, damage, false);
 	}
 	
 	public boolean attack(Team target) {
 		if(multiattack) {
 			int n = target.getMembersRemaining();
-			if(n > 0) {
+			if(n > 1) {
 				for(Character targetC : target.getAllTargets()) {
 					attack(targetC, damage-n);
 				}
@@ -120,8 +121,14 @@ public class Character implements Comparable<Character> {
 			} else {
 				return attack(target.getTarget(), true);
 			}
+		} else if(selectiveArea) {
+			for(Character targetC : target.getAllTargets()) {
+				targetC.dodgeArea(damage);
+			}
+			return target.getMembersRemaining() == 0;
+		} else {
+			return attack(target.getTarget());
 		}
-		return attack(target.getTarget());
 	}
 	
 	//returns true
@@ -166,6 +173,18 @@ public class Character implements Comparable<Character> {
 		}
 		print(name + " was incapacitated");
 		return incapacitate();
+	}
+	
+	public boolean dodgeArea(double effect) {
+		double roll = 1 + Math.random()*20;
+		if(roll >= 20)	//Critical success
+			roll += 5;
+		if(roll + activeDefense >= effect + 10) {	//Successful dodge
+			return takeHit(Math.max(Math.floor(effect/2),1));	//Half effect rounded down to minimum of 1
+			//takeHit(effect-5);	//Much better way of doing it
+		} else {
+			return takeHit(effect);
+		}
 	}
 	
 	private void print(String s) {
