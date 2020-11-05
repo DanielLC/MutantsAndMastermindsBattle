@@ -10,13 +10,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import main.Character;
+import main.Player;
 
 public class CharacterGUI extends JPanel implements ActionListener {
-	public Character character;
+	public Player character;
 	private TextField activeDefense;
 	private TextField toughness;
 	private TextField attack;
@@ -27,7 +26,7 @@ public class CharacterGUI extends JPanel implements ActionListener {
 		this.team = team;
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-		character = new Character("");
+		character = new Player("");
 		character.team = team.team;
 		
 		activeDefense = new TextField("0");

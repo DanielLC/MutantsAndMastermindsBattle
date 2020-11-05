@@ -4,30 +4,40 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class Team {
-	public ArrayList<Character> members;
+	public ArrayList<Player> members;
 	public Team enemyTeam;
 	private int i;
 	private int membersRemaining;
-	public Team(Character...members) {
-		this.members = new ArrayList<Character>(Arrays.asList(members));
+	
+	public Team(Player...members) {
+		this.members = new ArrayList<Player>(Arrays.asList(members));
 		i = 0;
 		membersRemaining = members.length;
-		for(Character character : members) {
-			character.team = this;
+		for(Player Player : members) {
+			Player.team = this;
 		}
 	}
-	public Team(Character base, int copies) {
-		members = new ArrayList<Character>(copies);
+	
+	public Team(Player base, int copies) {
+		members = new ArrayList<Player>(copies);
 		membersRemaining = copies;
 		for(int i=0; i<copies; ++i) {
-			members.add(new Character(base, this));
+			members.add(new Player(base, this, i));
 		}
 	}
+	
 	public Team() {
-		this.members = new ArrayList<Character>();
+		this.members = new ArrayList<Player>();
 		i = 0;
 		membersRemaining = 0;
 	}
+	
+	public void add(Player member) {
+		this.members.add(member);
+		++membersRemaining;
+		member.team = this;
+	}
+	
 	public void shuffle() {
 		Collections.shuffle(members);
 	}
@@ -35,27 +45,27 @@ public class Team {
 		Collections.sort(members);
 	}
 	public void reset() {
-		for(Character character : members) {
-			character.reset();
+		for(Player Player : members) {
+			Player.reset();
 		}
 		i = 0;
 		membersRemaining = members.size();
 	}
-	public Character getTarget() {
+	public Player getTarget() {
 		while(members.get(i).incapacitated) {
 			i = (i+1)%members.size();
 		}
 		return members.get(i);
 	}
-	public Character[] getAllTargets() {	//Returns up to n targets. Useful for multi-attack and area attacks.
-		Character[] characters = new Character[membersRemaining];
+	public Player[] getAllTargets() {	//Returns up to n targets. Useful for multi-attack and area attacks.
+		Player[] Players = new Player[membersRemaining];
 		for(int j=0; j<membersRemaining; ++j) {
 			while(members.get(i).incapacitated) {
 				i = (i+1)%members.size();
 			}
-			characters[j] = members.get(i);
+			Players[j] = members.get(i);
 		}
-		return characters;
+		return Players;
 	}
 	public boolean loseMember() {
 		--membersRemaining;
@@ -63,7 +73,7 @@ public class Team {
 	}
 	public String toString() {
 		String s = "";
-		for(Character c : members) {
+		for(Player c : members) {
 			s += c + "\n";
 		}
 		return s;

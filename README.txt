@@ -40,3 +40,13 @@ Someone ahead by one PL wins 72% of the time.
 * All else being equal, attacking stronger characters first is better, but it's extremely minor. If two pairs fight, with a PL difference of 10 attacking the strongest first wins 58% of the time. And it gradually increases to approach that.
 
 * If the weaker character is additionally a minion, it's better to go for the minion first if they're even (winning 69% of the time), but as the minions get weaker this gets less useful, with it not mattering who you attack at 6 power levels, and after that you're actually better off killing the stronger enemy first.
+
+* Afflictions are underpowered. Impaired/disabled/incapacitated wins 21% of the time. Vulnerable/defenseless/incapacitated (at PL10) is a mere 15.3% of the time.
+
+* Adding in Perception, it still only increases to 26% victory for impaired/disabled/incapacitated (vulnerable and defensless are irrelevant to Perception attacks).
+
+* It's not just that it needs to be mixed with Damage. Even having one person with Affliction in a large team will still result result in losing more often.
+
+* Adding Cumulative gives the opposite problem, with them winning 67% of the time for impaired/disabled/incapacitated and 63% for vulnerable/defenseless/incapacitated.
+
+* Giving +2 to the effect rank gets impaired/disabled/incapacitate to win 49% of the time, and +2.3 to vulnerable/defenseless/incapacitated wins 50% of the time. Just give +2 to both if you want to try to balance them.

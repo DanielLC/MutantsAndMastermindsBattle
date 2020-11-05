@@ -6,23 +6,23 @@ import java.util.Iterator;
 import java.util.List;
 
 //Simple convenience class
-public class TurnOrder implements Iterable<Character> {
-	private List<Character> characters;
+public class TurnOrder implements Iterable<Player> {
+	private List<Player> Players;
 	public TurnOrder(Team...teams) {
-		characters = new ArrayList<Character>();
+		Players = new ArrayList<Player>();
 		for(Team team : teams) {
-			characters.addAll(team.members);
+			Players.addAll(team.members);
 		}
 	}
-	public TurnOrder(Character...characters) {
-		this.characters = new ArrayList<Character>(Arrays.asList(characters));
+	public TurnOrder(Player...Players) {
+		this.Players = new ArrayList<Player>(Arrays.asList(Players));
 	}
 	public void shuffle() {
-		Collections.shuffle(characters);
+		Collections.shuffle(Players);
 	}
 	@Override
-	public Iterator<Character> iterator() {
-		return new Iterator<Character>(){
+	public Iterator<Player> iterator() {
+		return new Iterator<Player>(){
 			int i=0;
 			@Override
 			public boolean hasNext() {
@@ -30,12 +30,12 @@ public class TurnOrder implements Iterable<Character> {
 			}
 
 			@Override
-			public Character next() {
-				while(characters.get(i).incapacitated) {
-					i = (i+1)%characters.size();
+			public Player next() {
+				while(Players.get(i).incapacitated) {
+					i = (i+1)%Players.size();
 				}
-				Character c = characters.get(i);
-				i = (i+1)%characters.size();
+				Player c = Players.get(i);
+				i = (i+1)%Players.size();
 				return c;
 			}
 			
