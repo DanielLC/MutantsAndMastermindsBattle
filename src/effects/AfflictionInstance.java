@@ -27,7 +27,7 @@ public class AfflictionInstance {
 	}
 	
 	public void activeResist(double modifier) {	//Used when attacked
-		int degree = target.check(defenseRank, affliction.effectRank+modifier+10, false);
+		int degree = target.check(defenseRank, affliction.effectRank+modifier+10);
 		if(affliction.cumulative && currentDegree < 0) {
 			//System.out.println("Degree: " + degree + "\tCurrent Degree: " + currentDegree);
 			degree += currentDegree;
@@ -45,7 +45,7 @@ public class AfflictionInstance {
 	}
 	
 	public void passiveResist() {	//Used at the end of defenders turn
-		int degree = target.check(defenseRank, affliction.effectRank+10, false);
+		int degree = target.check(defenseRank, affliction.effectRank+10);
 		if(degree >= 0) {
 			setCondition(Condition.NULL);
 		}
