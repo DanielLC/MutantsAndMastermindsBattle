@@ -71,13 +71,14 @@ public class CharacterGUI extends JPanel implements ActionListener {
 			}
 			
 			if(field == activeDefense) {
-				character.activeDefense = value;
+				character.dodge = value;
+				character.parry = value;
 			} else if(field == toughness) {
 				character.toughness = value;
 			} else if(field == attack) {
-				character.attack = value;
+				character.effects.get(0).attack = value;
 			} else if(field == damage) {
-				character.damage = value;
+				character.effects.get(0).effectRank = value;
 			}
 		}
 		

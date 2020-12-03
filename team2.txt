@@ -1,0 +1,43 @@
+Player:		Energy Controller
+Dodge:		-8
+Parry:		-4
+Toughness:	-12
+Fortitude:	7
+Will:		8
+Damage:		Energy Control
+	Attack:		8
+	Rank:		12
+	Ranged
+Damage:		Unarmed
+	Attack:		4
+	Rank:		1
+
+Player:		Gadgeteer
+Active Defense:	8
+Toughness:	12		:10 without active defense
+Fortitude:	7
+Will:		10
+Damage:		Blaster
+	Attack:		8
+	Rank:		12
+	Ranged
+Affliction:	Dazzle
+	Rank:		12
+	Degree 1:	impaired
+	Degree 2:	disabled
+	Degree 3:	incapacitated
+	Resistance: fortitude
+	Cumulative
+Damage:		Unarmed
+	Attack:		4
+	Rank:		0
+
+Player:		Martial Artist
+Active Defense:	13
+Toughness:	7		:3 without active defense
+Fortitude:	11
+Will:		9
+Damage:		Unarmed
+	Attack:		16
+	Rank:		4
+	Threat Range:	2

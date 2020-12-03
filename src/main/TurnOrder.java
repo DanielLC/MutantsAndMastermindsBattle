@@ -7,18 +7,18 @@ import java.util.List;
 
 //Simple convenience class
 public class TurnOrder implements Iterable<Player> {
-	private List<Player> Players;
+	public List<Player> players;
 	public TurnOrder(Team...teams) {
-		Players = new ArrayList<Player>();
+		players = new ArrayList<Player>();
 		for(Team team : teams) {
-			Players.addAll(team.members);
+			players.addAll(team.members);
 		}
 	}
 	public TurnOrder(Player...Players) {
-		this.Players = new ArrayList<Player>(Arrays.asList(Players));
+		this.players = new ArrayList<Player>(Arrays.asList(Players));
 	}
-	public void shuffle() {
-		Collections.shuffle(Players);
+	public void shuffle() {	//TODO: Figure out a way to do this with initiative.
+		Collections.shuffle(players);
 	}
 	@Override
 	public Iterator<Player> iterator() {
@@ -31,11 +31,11 @@ public class TurnOrder implements Iterable<Player> {
 
 			@Override
 			public Player next() {
-				while(Players.get(i).incapacitated) {
-					i = (i+1)%Players.size();
+				while(players.get(i).incapacitated) {
+					i = (i+1)%players.size();
 				}
-				Player c = Players.get(i);
-				i = (i+1)%Players.size();
+				Player c = players.get(i);
+				i = (i+1)%players.size();
 				return c;
 			}
 			

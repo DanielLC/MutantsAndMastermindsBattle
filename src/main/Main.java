@@ -27,7 +27,7 @@ public class Main {
 		Player alice = new Player("Alice", powerLevel);
 		//alice.perception = true;
 		//alice.affliction = new Affliction(Condition.IMPAIRED, Condition.DISABLED, Condition.INCAPACITATED, powerLevel+2, "will");
-		alice.affliction = new Affliction(Condition.VULNERABLE, Condition.DEFENSELESS, Condition.INCAPACITATED, powerLevel+2.6, "will");
+		new Affliction(alice, Condition.VULNERABLE, Condition.DEFENSELESS, Condition.INCAPACITATED, powerLevel, powerLevel+2.6, "will");
 		//alice.affliction.cumulative = true;
 		Team red = new Team(new Player("Red", powerLevel), 0);
 		red.add(alice);

@@ -41,9 +41,7 @@ public class Team {
 	public void shuffle() {
 		Collections.shuffle(members);
 	}
-	public void sort() {
-		Collections.sort(members);
-	}
+	
 	public void reset() {
 		for(Player Player : members) {
 			Player.reset();
@@ -58,14 +56,15 @@ public class Team {
 		return members.get(i);
 	}
 	public Player[] getAllTargets() {	//Returns up to n targets. Useful for multi-attack and area attacks.
-		Player[] Players = new Player[membersRemaining];
+		Player[] players = new Player[membersRemaining];
 		for(int j=0; j<membersRemaining; ++j) {
 			while(members.get(i).incapacitated) {
 				i = (i+1)%members.size();
 			}
-			Players[j] = members.get(i);
+			players[j] = members.get(i);
+			++i;
 		}
-		return Players;
+		return players;
 	}
 	public boolean loseMember() {
 		--membersRemaining;

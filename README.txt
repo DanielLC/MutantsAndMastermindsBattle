@@ -6,7 +6,11 @@ If you aren't familiar with programming, you can just download battleSim.jar and
 
 The battles randomize the turns, but assume you attack the members in the opposing team in order. This lets you test out who to target first, but is a problem if you want a non-optimal game where characters attack each other more randomly. I'll probably add that as option eventually.
 
+I'm not sure how the resistance check for afflictions is supposed to work if the effect is used twice with different modifiers (such as +5 for critical hit). Currently I have it just overwrite it with the last value.
+
 Here's some things I've found so far:
+
+*NOTE: Redo multiattack and area.
 
 * The character who goes first wins 53% of the time.
 

@@ -1,0 +1,47 @@
+Player:		Battlesuit
+Active Defense:	8
+Toughness:	12
+Fortitude:	6
+Will:		6
+Damage:		Force Beam
+	Attack:		8
+	Rank:		12
+	Ranged
+Damage:		Unarmed
+	Attack:		8
+	Rank:		12
+
+Player:		Construct
+Active Defense:	9
+Toughness:	11
+Fortitude:	Infinity
+Will:		9
+Damage:		Unarmed
+	Attack:		9
+	Rank:		11
+Damage:		Ranged
+	Attack:		8
+	Rank:		10
+	Ranged
+
+Player:		Crime Fighter
+Active Defense:	12
+Toughness:	8		:5 without active defense
+Fortitude:	6
+Will:		10
+Damage:		Boomerang
+	Attack:		14
+	Rank:		4
+	Ranged
+Affliction:	Dazzle
+	Rank:		3
+	Degree 1:	impaired
+	Degree 2:	disabled
+	Degree 3:	incapacitated
+	Resistance: fortitude
+	Area
+	Cumulative
+:TODO smoke and sleep gas pellets
+Damage:		Unarmed
+	Attack:		14
+	Rank:		3

@@ -8,6 +8,7 @@ public class AfflictionInstance {
 	public Condition currentCondition = Condition.NULL;
 	public int currentDegree = 0;
 	public double defenseRank;
+	public double effectiveRank;
 	
 	//TODO: will doesn't seem like it's being set. Or it's cleared somehow.
 	public AfflictionInstance(Affliction affliction, Player target) {
@@ -27,7 +28,8 @@ public class AfflictionInstance {
 	}
 	
 	public void activeResist(double modifier) {	//Used when attacked
-		int degree = target.check(defenseRank, affliction.effectRank+modifier+10);
+		this.effectiveRank = affliction.effectRank + modifier;
+		int degree = target.check(defenseRank, effectiveRank+10);
 		if(affliction.cumulative && currentDegree < 0) {
 			//System.out.println("Degree: " + degree + "\tCurrent Degree: " + currentDegree);
 			degree += currentDegree;
@@ -35,17 +37,17 @@ public class AfflictionInstance {
 		if(degree >= currentDegree)				//Positive degree means they resisted.
 			return;
 		if(degree == -1) {
-			setCondition(affliction.rank1);
+			setCondition(affliction.degree1);
 		} else if(degree == -2) {
-			setCondition(affliction.rank2);
+			setCondition(affliction.degree2);
 		} else {
-			setCondition(affliction.rank3);
+			setCondition(affliction.degree3);
 		}
 		currentDegree = degree;
 	}
 	
 	public void passiveResist() {	//Used at the end of defenders turn
-		int degree = target.check(defenseRank, affliction.effectRank+10);
+		int degree = target.check(defenseRank, effectiveRank+10);
 		if(degree >= 0) {
 			setCondition(Condition.NULL);
 		}
