@@ -1,11 +1,15 @@
 package playGui;
 
+import java.awt.GridLayout;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 
 import fileio.PlayerReader;
 import main.*;
@@ -35,8 +39,10 @@ public class GUI extends JFrame {
 	public GUI() {
 		gui = this;
 		
-		setSize(1000,400);
-		setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+		setSize(1000,800);
+		setLayout(new GridLayout(2, 1));
+		JPanel top = new JPanel();
+		top.setLayout(new BoxLayout(top, BoxLayout.X_AXIS));
 
 		//Team red = new Team(new Player("Red"), 5);
 		//Team blue = new Team(new Player("Blue"), 4);
@@ -44,39 +50,46 @@ public class GUI extends JFrame {
 		Team blue = PlayerReader.read("team2.txt");
 		TurnOrder turnOrder = new TurnOrder(red, blue);
 
-		add(Box.createHorizontalGlue());
+		top.add(Box.createHorizontalGlue());
 		
 		turnSelect = new TurnSelect(turnOrder);
 		JScrollPane turnOrderScroll = new JScrollPane(turnSelect, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		turnOrderScroll.setBorder(BorderFactory.createEmptyBorder());
 		//turnOrderScroll.add(new TurnSelect(turnOrder));
-		add(turnOrderScroll);
+		top.add(turnOrderScroll);
 		
-		add(Box.createHorizontalGlue());
-		add(new JSeparator(JSeparator.VERTICAL));
+		top.add(Box.createHorizontalGlue());
+		top.add(new JSeparator(JSeparator.VERTICAL));
 		
 		modifierSelect = new ModifierSelect();
-		add(modifierSelect);
+		top.add(modifierSelect);
 		modifierSelect.allOutAttack.setBounds(-2, 5);
 		
-		add(Box.createHorizontalGlue());
-		add(new JSeparator(JSeparator.VERTICAL));
+		top.add(Box.createHorizontalGlue());
+		top.add(new JSeparator(JSeparator.VERTICAL));
 		
 		attackSelect = new AttackSelect();
-		add(attackSelect);
+		top.add(attackSelect);
 		
-		add(Box.createHorizontalGlue());
-		add(new JSeparator(JSeparator.VERTICAL));
+		top.add(Box.createHorizontalGlue());
+		top.add(new JSeparator(JSeparator.VERTICAL));
 		
 		targetSelect = new TargetSelect(red, blue);
-		add(targetSelect);
+		top.add(targetSelect);
 		
-		add(Box.createHorizontalGlue());
-		add(new JSeparator(JSeparator.VERTICAL));
+		top.add(Box.createHorizontalGlue());
+		top.add(new JSeparator(JSeparator.VERTICAL));
 		
 		conditionView = new ConditionView();
 		conditionView.setPlayer(red.members.get(0));
-		add(conditionView);
+		top.add(conditionView);
+		
+		add(top);
+		
+		Log log = new Log();
+		add(log);
+		Main.log = log;
+		Main.verbose = true;
 		
 		//add(Box.createHorizontalGlue());
 		
@@ -87,6 +100,7 @@ public class GUI extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+		Main.verbose = true;
 		new GUI();
 	}
 }

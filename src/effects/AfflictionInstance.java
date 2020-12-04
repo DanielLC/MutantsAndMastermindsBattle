@@ -10,7 +10,6 @@ public class AfflictionInstance {
 	public double defenseRank;
 	public double effectiveRank;
 	
-	//TODO: will doesn't seem like it's being set. Or it's cleared somehow.
 	public AfflictionInstance(Affliction affliction, Player target) {
 		this.affliction = affliction;
 		this.target = target;
@@ -24,7 +23,6 @@ public class AfflictionInstance {
 		default:
 			throw new RuntimeException("Error: resistance '" + affliction.resistance + "' not found.");
 		}
-		Main.print(target.name + " resists with " + affliction.resistance + ": " + this.defenseRank);
 	}
 	
 	public void activeResist(double modifier) {	//Used when attacked

@@ -1,10 +1,13 @@
 package main;
 
+import java.io.PrintStream;
+
 import effects.Affliction;
 import effects.Condition;
 
 public class Main {
-	public static final boolean verbose = false;
+	public static boolean verbose = false;
+	public static playGui.Log log = null;
 	
 	public static void main(String[] args) {
 		int battles = 10000;
@@ -74,7 +77,11 @@ public class Main {
 	}
 
 	public static void print(String s) {
-		if(verbose)
-			System.out.println(s);
+		if(verbose) {
+			if(log == null)
+				System.out.println(s);
+			else
+				log.log(s);
+		}
 	}
 }

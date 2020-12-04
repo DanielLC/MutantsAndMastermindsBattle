@@ -96,6 +96,19 @@ public class TargetSelect extends JPanel implements ItemListener {
 			}
 		}
 	}
+	
+	public void setEnabled(boolean enabled) {
+		for(int i=0; i<buttons.size(); ++i) {
+			buttons.get(i).setEnabled(enabled && !players.get(i).incapacitated);
+		}
+		if(enabled) {
+			if(getTargets().size() == 0) {
+				AttackButton.notReady(this);
+			}
+		} else {
+			AttackButton.ready(this);
+		}
+	}
 
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {

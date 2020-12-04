@@ -18,6 +18,7 @@ public class Player {
 	public boolean minion = false;
 	public boolean staggered = false;
 	public boolean incapacitated = false;
+	public boolean recoveryRemaining = true;
 	public Team team = null;
 	public int[] conditions = new int[Condition.COUNT.ordinal()];
 	public Hashtable<Affliction, AfflictionInstance> afflictions = new Hashtable<Affliction, AfflictionInstance>();
@@ -187,7 +188,12 @@ public class Player {
 	}
 	
 	public void takeTurn() {
-		effects.get(0).attack(team.enemyTeam);
+		if(staggered && recoveryRemaining) {
+			staggered = false;
+			recoveryRemaining = false;
+		} else {
+			effects.get(0).attack(team.enemyTeam);
+		}
 		for(AfflictionInstance a : afflictions.values()) {
 			a.passiveResist();
 		}

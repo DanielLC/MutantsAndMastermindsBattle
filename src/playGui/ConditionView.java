@@ -3,6 +3,8 @@ package playGui;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -17,36 +19,10 @@ import main.*;
 
 public class ConditionView extends JPanel {
 	private Player player;
-	private JTextArea conditionSummary;
-	private JToggleButton dummyButton;
-	private JToggleButton resistButton;
 	private static int MARGIN = 5;
 	private JButton endTurn;
 	
 	public ConditionView() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(Box.createVerticalStrut(MARGIN));
-		ButtonGroup buttonGroup = new ButtonGroup();
-		dummyButton = new JToggleButton();
-		buttonGroup.add(dummyButton);
-		resistButton = new JToggleButton("Resist Conditions");
-		resistButton.setAlignmentX(CENTER_ALIGNMENT);
-		resistButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				for(AfflictionInstance a : player.afflictions.values()) {
-					a.passiveResist();
-				}
-			}
-		});
-		add(resistButton);
-		buttonGroup.add(resistButton);
-		add(Box.createVerticalStrut(MARGIN));
-		conditionSummary = new JTextArea();
-		conditionSummary.setBackground(getBackground());
-		conditionSummary.setMaximumSize(new Dimension(100, Integer.MAX_VALUE));
-		
-		add(conditionSummary);
 		endTurn = new JButton("End Turn");
 		endTurn.setAlignmentX(CENTER_ALIGNMENT);
 		endTurn.addActionListener(new ActionListener() {
@@ -56,13 +32,25 @@ public class ConditionView extends JPanel {
 			}
 		});
 		add(endTurn);
-
 		add(Box.createVerticalGlue());
 	}
 	
 	public void setPlayer(Player player) {
 		this.player = player;
-		conditionSummary.setText(player.getConditionString());
-		dummyButton.doClick();
+		removeAll();
+		for(AfflictionInstance afflictionInstance : player.afflictions.values()) {
+			JToggleButton resist = new JToggleButton(afflictionInstance.affliction.name);
+			resist.setAlignmentX(CENTER_ALIGNMENT);
+			resist.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if(e.getStateChange() == ItemEvent.SELECTED) {
+						afflictionInstance.passiveResist();
+					}
+				}
+			});
+			add(resist);
+		}
+		add(endTurn);
 	}
 }
