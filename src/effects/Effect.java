@@ -46,13 +46,15 @@ public abstract class Effect {
 	
 	public void attack(Player target, double attackModifier, double effectModifier, boolean multiattackSingleTarget) {
 		if(perception) {
-			Main.print(user.name + " automatically hit " + target + " with Perception attack.");
+				if(Main.verbose)
+			Main.print(user.name + " automatically hits " + target.name + " with Perception attack");
 			affect(target, 0);
 			return;
 		}
 		double activeDefense = target.getActiveDefense(ranged);
 		if(target.minion && !user.minion && attack >= activeDefense) {
-			Main.print(user.name + " hit " + target + ", minion, as a routine check");
+			if(Main.verbose)
+				Main.print(user.name + " hits " + target.name + ", minion, as a routine check");
 			affect(target, effectModifier);
 			return;
 		}
@@ -64,33 +66,41 @@ public abstract class Effect {
 		if(hit == 2) {			//If it's a critical
 			if(!user.minion) {
 				if(target.minion) {
-					Main.print(user.name + " critically hit " + target + ", minion, defeating them instantly");
+					if(Main.verbose)
+						Main.print(user.name + " critically hits " + target.name + ", minion, defeating them instantly");
 					target.incapacitate();
 					return;
 				} else {
-					Main.print(user.name + " critically hit " + target);
+					if(Main.verbose)
+						Main.print(user.name + " critically hits " + target.name);
 					effectModifier += 5;
 				}				//The last option is a minion attacking a non-minion, which can't crit, so it passes through
 			}
 		}
 		if(hit >= 1) {
 			if(multiattackSingleTarget) {
+				if(Main.verbose)
+					Main.print(user + " rolls attack.");
 				int degree = user.check(attack, activeDefense + 10, roll);
 				if(degree >= 3) {
 					effectModifier += 5;
-					Main.print(user.name + " hit " + target.name + " with a +5 modifier from multiattack.");
+					if(Main.verbose)
+						Main.print(user.name + " hits " + target.name + " with a +5 modifier from multiattack.");
 				}
 				else if(degree >= 2) {
 					effectModifier += 2;
-					Main.print(user.name + " hit " + target.name + " with a +2 modifier from multiattack.");
+					if(Main.verbose)
+						Main.print(user.name + " hits " + target.name + " with a +2 modifier from multiattack.");
 				}
 			} else {
-				Main.print(user.name + " hit " + target.name);
+				if(Main.verbose)
+					Main.print(user.name + " hits " + target.name);
 			}
 			affect(target, effectModifier);
 			return;
 		}
-		Main.print(user.name + " missed " + target.name);
+		if(Main.verbose)
+			Main.print(user.name + " misses " + target.name);
 		return;
 	}
 	
@@ -134,11 +144,13 @@ public abstract class Effect {
 					attack(targetC, attackModifier, effectModifier-n, false);
 				}
 			}
+			return;
 		}
 		if(selectiveArea) {
 			for(Player targetC : targets) {
 				targetC.dodgeArea(this);
 			}
+			return;
 		}
 		attack(targets.get(0), attackModifier, effectModifier, false);	//Normal attack against single target
 	}

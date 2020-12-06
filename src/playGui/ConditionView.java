@@ -15,14 +15,14 @@ import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 import effects.AfflictionInstance;
+import effects.Condition;
 import main.*;
 
 public class ConditionView extends JPanel {
-	private Player player;
-	private static int MARGIN = 5;
 	private JButton endTurn;
 	
 	public ConditionView() {
+		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		endTurn = new JButton("End Turn");
 		endTurn.setAlignmentX(CENTER_ALIGNMENT);
 		endTurn.addActionListener(new ActionListener() {
@@ -36,16 +36,21 @@ public class ConditionView extends JPanel {
 	}
 	
 	public void setPlayer(Player player) {
-		this.player = player;
 		removeAll();
 		for(AfflictionInstance afflictionInstance : player.afflictions.values()) {
-			JToggleButton resist = new JToggleButton(afflictionInstance.affliction.name);
+			if(afflictionInstance.currentCondition == Condition.NULL)
+				break;
+			JToggleButton resist = new JToggleButton("Resist " + afflictionInstance.affliction.name);
 			resist.setAlignmentX(CENTER_ALIGNMENT);
 			resist.addItemListener(new ItemListener() {
 				@Override
 				public void itemStateChanged(ItemEvent e) {
 					if(e.getStateChange() == ItemEvent.SELECTED) {
 						afflictionInstance.passiveResist();
+						if(afflictionInstance.currentCondition == Condition.NULL) {
+							GUI.gui.conditionView.remove(resist);
+							GUI.gui.conditionView.revalidate();
+						}
 					}
 				}
 			});

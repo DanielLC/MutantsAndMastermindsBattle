@@ -21,8 +21,10 @@ public class GUI extends JFrame {
 	public ConditionView conditionView;
 	public AttackSelect attackSelect;
 	public static GUI gui;
+	public Player player;
 	
 	public void setPlayer(Player player) {
+		this.player = player;
 		//turnSelect.setPlayer(player);
 		modifierSelect.setPlayer(player);
 		targetSelect.clear();
@@ -63,7 +65,6 @@ public class GUI extends JFrame {
 		
 		modifierSelect = new ModifierSelect();
 		top.add(modifierSelect);
-		modifierSelect.allOutAttack.setBounds(-2, 5);
 		
 		top.add(Box.createHorizontalGlue());
 		top.add(new JSeparator(JSeparator.VERTICAL));
@@ -96,7 +97,7 @@ public class GUI extends JFrame {
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//turnSelect.firstPlayer();  //Crashes on this line. Sometimes. With unknown source.
+		//turnSelect.firstPlayer();  //Crashes on this line. Sometimes. With unknown source. And even when it does work it doesn't seem to properly set the player in the other functions.
 	}
 	
 	public static void main(String[] args) {

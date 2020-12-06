@@ -1,8 +1,8 @@
 Player:		Energy Controller
-Dodge:		-8
-Parry:		-4
+Dodge:		8
+Parry:		4
 Toughness:	12
-Fortitude:	-7
+Fortitude:	7
 Will:		8
 Damage:		Energy Control
 	Attack:		8

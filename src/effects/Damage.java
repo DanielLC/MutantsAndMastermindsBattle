@@ -17,37 +17,45 @@ public class Damage extends Effect {
 
 	@Override
 	public void affect(Player target, double modifier) {
+		if(Main.verbose)
+			Main.print(target.name + " rolls to resist Damage");
 		int degree = target.check(target.getToughness(), effectRank + modifier + 15);
 		if(degree >= 0) {		//Made save
-			Main.print(target.name + " tanked the damage");
+			if(Main.verbose)
+				Main.print(target.name + " tanks the damage");
 			return;
 		} else if(target.minion) {
-			Main.print(target.name + ", minion, was incapacitated");
+			if(Main.verbose)
+				Main.print(target.name + ", minion, is incapacitated");
 			target.incapacitate();
 			return;
 		}
 		switch(degree) {
 		case -1:	//Failed by one rank
-			Main.print(target.name + " was bruised");
+			if(Main.verbose)
+				Main.print(target.name + " is bruised");
 			++target.bruises;
 			return;
 		case -2:	//Failed by two ranks
-			Main.print(target.name + " was dazed");
+			if(Main.verbose)
+				Main.print(target.name + " is dazed");
 			++target.bruises;
 			return;
 		case -3:	//Failed by three ranks
 			++target.bruises;
 			if(target.staggered) {
-				Main.print(target.name + " was staggered again, and incapacitated");
+				if(Main.verbose)
+					Main.print(target.name + " is staggered again, and incapacitated");
 				target.incapacitate();
 				return;
 			} else {
-				Main.print(target.name + " was staggered");
+				if(Main.verbose)
+					Main.print(target.name + " is staggered");
 				target.staggered = true;
 				return;
 			}
 		default:	//Failed by four ranks
-			Main.print(target.name + " was incapacitated");
+			Main.print(target.name + " is incapacitated");
 			target.incapacitate();
 		}
 	}

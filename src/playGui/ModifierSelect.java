@@ -1,10 +1,10 @@
 package playGui;
 
 
-import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,11 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 import main.Player;
-import main.Team;
 
 public class ModifierSelect extends JPanel {
 	NoPartialFull coverPanel;
@@ -32,6 +32,11 @@ public class ModifierSelect extends JPanel {
 	public void setPlayer(Player player) {
 		powerAttack.setBounds(player.preciseAttack ? -5 : -3, player.powerAttack ? 5 : 3);
 		allOutAttack.setBounds(player.defensiveAttack ? -5 : -3, player.allOutAttack ? 5 : 3);
+		coverPanel.setValue(player.cover);
+		concealmentPanel.setValue(player.concealment);
+		rangePanel.setValue(player.range);
+		powerAttack.setValue(player.powerAttackValue);
+		allOutAttack.setValue(player.allOutAttackValue);
 	}
 	
 	public ModifierSelect() {
@@ -42,6 +47,12 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		coverPanel = new NoPartialFull();
+		coverPanel.setter = new ValueSetter() {
+			@Override
+			public void setValue(int i) {
+				GUI.gui.player.cover = i;
+			}
+		};
 		add(coverPanel);
 		add(Box.createVerticalStrut(5));
 		
@@ -49,6 +60,12 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		concealmentPanel = new NoPartialFull();
+		concealmentPanel.setter = new ValueSetter() {
+			@Override
+			public void setValue(int i) {
+				GUI.gui.player.concealment = i;
+			}
+		};
 		add(concealmentPanel);
 		add(Box.createVerticalStrut(5));
 		
@@ -56,33 +73,59 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		rangePanel = new NoPartialFull("Short", "Medium", "Long");
+		rangePanel.setter = new ValueSetter() {
+			@Override
+			public void setValue(int i) {
+				GUI.gui.player.range = i;
+			}
+		};
 		add(rangePanel);
 		add(Box.createVerticalStrut(15));
 		
-		JPanel chargePanel = new JPanel();
+		/*JPanel chargePanel = new JPanel();
 		charge = new JToggleButton("Charge");
 		charge.setAlignmentX(CENTER_ALIGNMENT);
-		add(charge);
+		add(charge);*/
 		
 		powerAttack = new SlidingScale("Precise Attack", "Power Attack");
+		powerAttack.setter = new ValueSetter() {
+			@Override
+			public void setValue(int i) {
+				GUI.gui.player.powerAttackValue = i;
+			}
+		};
 		add(powerAttack);
 
 		allOutAttack = new SlidingScale("Defensive Attack", "All-Out Attack");
+		allOutAttack.setter = new ValueSetter() {
+			@Override
+			public void setValue(int i) {
+				GUI.gui.player.allOutAttackValue = i;
+			}
+		};
 		add(allOutAttack);
 		
 		add(Box.createVerticalGlue());
 	}
 	
-	public class NoPartialFull extends JPanel {
-		JToggleButton no;
-		JToggleButton partial;
-		JToggleButton full;
+	private interface ValueSetter {
+		public void setValue(int i);
+	}
+	
+	public class NoPartialFull extends JPanel implements ActionListener {
+		private JToggleButton no;
+		private JToggleButton partial;
+		private JToggleButton full;
+		public ValueSetter setter;
 
 		public NoPartialFull(String noName, String partialName, String fullName) {
 			setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 			no = new JToggleButton(noName);
 			partial = new JToggleButton(partialName);
 			full = new JToggleButton(fullName);
+			no.addActionListener(this);
+			partial.addActionListener(this);
+			full.addActionListener(this);
 			add(Box.createHorizontalGlue());
 			add(no);
 			//add(Box.createHorizontalGlue());
@@ -104,9 +147,9 @@ public class ModifierSelect extends JPanel {
 		}
 		
 		public int getValue() {
-			if(partial.getModel().isPressed())
+			if(partial.getModel().isSelected())
 				return 2;
-			if(full.getModel().isPressed())
+			if(full.getModel().isSelected())
 				return 5;
 			return 0;
 		}
@@ -125,10 +168,17 @@ public class ModifierSelect extends JPanel {
 			}
 			throw new RuntimeException("Value " + n + " invalid for playGUI.ModifierSelect.NoPartialFull.setValue()");
 		}
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			if(setter != null)
+				setter.setValue(getValue());
+		}
 	}
 	
-	public class SlidingScale extends JPanel {
+	public class SlidingScale extends JPanel implements ChangeListener {
 		private JSlider slider;
+		public ValueSetter setter;
 		
 		public SlidingScale(String left, String right) {
 			setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -145,6 +195,7 @@ public class ModifierSelect extends JPanel {
 			slider.setMajorTickSpacing(1);
 			slider.setPaintTicks(true);
 			slider.setPaintLabels(true);
+			slider.addChangeListener(this);
 			
 			//Copied from Stack Overflow. This lets you click on the slider and have it move there immediately, instead of just a bit closer.
 			slider.addMouseListener(new MouseAdapter() {
@@ -172,6 +223,12 @@ public class ModifierSelect extends JPanel {
 			slider.setMinimum(min);
 			slider.setMaximum(max);
 			revalidate();
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent arg0) {
+			if(setter != null)
+				setter.setValue(slider.getValue());
 		}
 	}
 }

@@ -29,15 +29,20 @@ public class Player {
 	public boolean preciseAttack;
 	public boolean allOutAttack;
 	public boolean defensiveAttack;
-	public double powerAttackValue;
-	public double allOutAttackValue;
+	public int powerAttackValue;
+	public int allOutAttackValue;
+	public int cover;
+	public int concealment;
+	public int range;
 	
 	public double getAttackModifier() {
-		return -powerAttackValue;	//Charge attacks will need to be added too, and maybe some other custom modifiers. Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
+		return -powerAttackValue - range;
+		//Charge attacks will need to be added too, and maybe some other custom modifiers. Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
 	}
 	
 	public double getEffectModifier() {
-		return powerAttackValue + allOutAttackValue;	//Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
+		return powerAttackValue + allOutAttackValue;
+		//Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
 	}
 	
 	public void rollInitiative() {
@@ -79,13 +84,19 @@ public class Player {
 	}
 	
 	public int check(double ability, double difficultyClass, double roll) {
-		if(Main.verbose)	//Theoretically redundant, but it takes too much time formatting this when I won't show it anyway.
-			Main.print(String.format("%s rolled d20%+.0f vs %.0f: %.0f", name, ability, difficultyClass, roll));
+		if(Main.verbose) {
+			int plus = (int)(ability + getModifier());
+			Main.print(String.format("%s rolled d20%+d vs %.0f: %.0f%2$+d = %.0f", name, plus, difficultyClass, roll, roll + plus));
+		}
 		if(roll >= 20) {
 			roll += 5;
 		}
 		double val = (roll + ability + getModifier() - difficultyClass)/5;
 		val += Math.signum(val);	//(int) rounds toward zero. I need to round away from zero.
+		if(Main.verbose) {
+			int degMag = Math.abs((int)val);
+			Main.print((val > 0 ? "SUCCEESS" : "FAILURE") + " by " + degMag + " degree" + (degMag > 1 ? "s" : ""));
+		}
 		return (int) val;
 	}
 	
@@ -103,6 +114,8 @@ public class Player {
 		if(conditions[Condition.PRONE.ordinal()] > 0) {
 			total -= 5;
 		}
+		total += concealment;		//TODO: Concealment shouldn't help against area attacks. I'm going to need to change stuff to make that work. It's just supposed to subtract from the attack of the attack, not improve your dodge.
+		total += cover;				//TODO: This one does help against area attacks, but it has that explicitly. Theoretically, there should be times where this doesn't work.
 		return total;
 	}
 	
@@ -206,6 +219,8 @@ public class Player {
 	}
 	
 	public void dodgeArea(Effect effect) {
+		if(Main.verbose)
+			Main.print(name + " rolls to dodge area " + effect.name);
 		int degree = check(dodge, effect.effectRank + 10);
 		if(degree >= 0) {	//Successful dodge
 			effect.affect(this, Math.max(Math.floor(effect.effectRank/2),1) - effect.effectRank);	//Half effect rounded down to minimum of 1

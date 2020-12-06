@@ -27,6 +27,8 @@ public class AfflictionInstance {
 	
 	public void activeResist(double modifier) {	//Used when attacked
 		this.effectiveRank = affliction.effectRank + modifier;
+		if(Main.verbose)
+			Main.print(target.name + " rolls to actively resist " + affliction.name);
 		int degree = target.check(defenseRank, effectiveRank+10);
 		if(affliction.cumulative && currentDegree < 0) {
 			//System.out.println("Degree: " + degree + "\tCurrent Degree: " + currentDegree);
@@ -45,6 +47,8 @@ public class AfflictionInstance {
 	}
 	
 	public void passiveResist() {	//Used at the end of defenders turn
+		if(Main.verbose)
+			Main.print(target.name + " rolls to passively resist " + affliction.name);
 		int degree = target.check(defenseRank, effectiveRank+10);
 		if(degree >= 0) {
 			setCondition(Condition.NULL);
@@ -52,7 +56,10 @@ public class AfflictionInstance {
 	}
 	
 	private void setCondition(Condition newCondition) {
-		Main.print(target.name + " is now " + newCondition);
+		if(newCondition != Condition.NULL)
+			Main.print(target.name + " is now " + newCondition);
+		else if(currentCondition != Condition.NULL)
+			Main.print(target.name + " is no longer " + currentCondition);
 		--target.conditions[currentCondition.ordinal()];
 		++target.conditions[newCondition.ordinal()];
 		currentCondition = newCondition;

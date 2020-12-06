@@ -87,9 +87,13 @@ public class TargetSelect extends JPanel implements ItemListener {
 	
 	public void setMultipleSelection(boolean bool) {
 		if(bool) {
-			group.clearSelection();
+			if(group.getButtonCount() > 0) {
+				for(JToggleButton b : buttons) {
+					group.remove(b);
+				}
+			}
 		} else {
-			if(!group.getElements().hasMoreElements()) {	//If there's already buttons in the group, then it's already set for single target.
+			if(group.getButtonCount() == 0) {	//If there's already buttons in the group, then it's already set for single target.
 				for(JToggleButton b : buttons) {
 					group.add(b);
 				}
