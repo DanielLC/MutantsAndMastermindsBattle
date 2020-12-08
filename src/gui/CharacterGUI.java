@@ -26,7 +26,7 @@ public class CharacterGUI extends JPanel implements ActionListener {
 		this.team = team;
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
 		setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
-		character = new Player("");
+		character = new Player("", 0);
 		character.team = team.team;
 		
 		activeDefense = new TextField("0");

@@ -9,12 +9,13 @@ import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import main.*;
 
 public class TeamGUI extends JPanel implements ActionListener {
 	public Team team;
-	private Label header;
+	private JTextField header;
 	
 	public TeamGUI() {
 		setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -46,8 +47,11 @@ public class TeamGUI extends JPanel implements ActionListener {
 	
 	public void setHeader(String s) {
 		if(header == null) {
-			header = new Label();
-			header.setAlignment(Label.CENTER);
+			header = new JTextField();
+			header.setEditable(false);
+			header.setHorizontalAlignment(JTextField.CENTER);
+			header.setBackground(null); //this is the same as a JLabel
+			header.setBorder(null); //remove the border
 			header.setMaximumSize(new Dimension(Integer.MAX_VALUE, 10));
 			add(header, 0);
 		}

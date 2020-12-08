@@ -51,17 +51,21 @@ public class Team {
 	}
 	public Player getTarget() {
 		while(members.get(i).incapacitated) {
-			i = (i+1)%members.size();
+			i = i+1;
 		}
 		return members.get(i);
 	}
 	public Player[] getAllTargets() {	//Returns up to n targets. Useful for multi-attack and area attacks.
 		Player[] players = new Player[membersRemaining];
+		int k=i;
 		for(int j=0; j<membersRemaining; ++j) {
-			while(members.get(i).incapacitated) {
-				i = (i+1)%members.size();
+			while(members.get(k).incapacitated) {
+				++k;
 			}
-			players[j] = members.get(i);
+			players[j] = members.get(k);
+			++k;
+		}
+		while(members.get(i).incapacitated) {
 			++i;
 		}
 		return players;

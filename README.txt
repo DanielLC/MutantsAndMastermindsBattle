@@ -10,36 +10,49 @@ I'm not sure how the resistance check for afflictions is supposed to work if the
 
 Here's some things I've found so far:
 
-*NOTE: Redo multiattack and area.
+Here's a table of how likely you are to win vs a character some number of PL lower:
 
-* The character who goes first wins 53% of the time.
+0.00:	50.064% ± 0.049%
+0.25:	55.253% ± 0.048%
+0.50:	60.291% ± 0.047%
+0.75:	65.125% ± 0.045%
+1.00:	69.723% ± 0.041%
+1.25:	74.074% ± 0.038%
+1.50:	78.133% ± 0.033%
+1.75:	81.638% ± 0.029%
+2.00:	84.750% ± 0.025%
+2.25:	87.438% ± 0.022%
+2.50:	89.862% ± 0.018%
+2.75:	91.871% ± 0.015%
+3.00:	93.569% ± 0.012%
 
-* The average match is 11.6 turns long (counting each player going as one turn).
+* The character who goes first wins 52.876% ± 0.049% of the time.
 
-* Putting an extra point in Toughness and one less in the active defenses (or equivalently, an extra point in damage and one less in accuracy) lets you win 54% of the time.
+* The average match is 12.445082 turns long (counting each player going as one turn).
 
-* The idea amount of Damage is 3.7 more than your opponent's Toughness (assuming the same PL), winning 58.4% of the time. The ideal amount of Toughness is as far from 3.7 less than you're opponents Damage in either direction. Having the ideal Damage/Toughness ratio is about the same as having an extra 1.5 in the Active Defense + Toughness or Attack + Effect.
-Someone ahead by one PL wins 72% of the time.
+* Putting an extra point in Toughness and one less in the active defenses (or equivalently, an extra point in damage and one less in accuracy) lets you win 53.824% ± 0.049% of the time.
 
-* A Perception attack is balanced if it has -3 to Damage. On its own, you win 73.5% of the time, so it's roughly equivalent to being one PL higher.
+* The idea amount of Damage is 4 more than your opponent's Toughness (assuming the same PL), winning 59.314% ± 0.047% of the time. The ideal amount of Toughness is as far from 4 less than you're opponents Damage in either direction.
 
-* Two characters working together are evenly matched against one 2.31 power levels higher.
+* Perception wins 69.742% ± 0.041% of the time. Equivelent to on PL higher.
 
-* Three characters are evenly matched against someone 3.8 levels higher.
+* Two characters working together are evenly matched against one 2.4 power levels higher.
 
-* Four are evenly matched against 4.85 levels higher.
+* Three characters are evenly matched against someone 3.9 levels higher.
 
-* One character with a side kick 3.1 levels lower is evenly matched against someone one power level higher than them. For example, if you're in a PL 10 game you'd be balanced playing as someone PL 9 with a PL 6 side kick.
+* Four are evenly matched against 5.1 levels higher.
 
-* A minion is even against someone 3.93 power levels lower.
+* One character with a sidekick 3.5 levels lower is evenly matched against someone one power level higher than them. For example, if you're in a PL 10 game you'd be balanced playing as someone PL 9 with a PL 6 side kick.
 
-* Multiattack against a single target lets you win 51.4% of the time.
+* Multiattack against a single target lets you win 59.966% ± 0.047% of the time.
 
-* Two on two, both characters having multiattack is worth a PL difference of 0.4
+* Two on two, two characters with multiattack win 59.94% ± 0.15% of the time, and are even against someone 0.5 PL above them.
 
-* Four on four, all the characters having multiattack is worth a PL difference of 1
+* Four on four, all the characters having multiattack win 60.25% ± 0.15% of the time, and are even against someone 0.8 PL above them.
 
-* One character with multiattack is balanced against four that are 3.8 PL lower (as opposed to 4.85).
+* One character with multiattack is balanced against four that are 4 PL lower (as opposed to 5.1).
+
+Here's some old stuff I haven't gotten around to retesting. Area attacks were buggy, and Recover actions weren't implemented.
 
 * All else being equal, attacking stronger characters first is better, but it's extremely minor. If two pairs fight, with a PL difference of 10 attacking the strongest first wins 58% of the time. And it gradually increases to approach that.
 

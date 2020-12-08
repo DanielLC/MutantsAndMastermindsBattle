@@ -56,8 +56,8 @@ public class GUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		int n = Integer.parseInt(battles.getText());
 		int team1Wins = Main.simulate(team1.team, team2.team, n);
-		team1.setHeader("Wins: " + (team1Wins * 100.0/n) + "%");
-		team2.setHeader("Wins: " + ((n-team1Wins) * 100.0/n) + "%");
+		team1.setHeader("Wins: " + Main.getWinPercentString(team1Wins, n));
+		team2.setHeader("Wins: " + Main.getWinPercentString(n-team1Wins, n));
 	}
 	
 	private class NumEnforcer implements FocusListener {

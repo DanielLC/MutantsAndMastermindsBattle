@@ -4,55 +4,54 @@ import java.io.PrintStream;
 
 import effects.Affliction;
 import effects.Condition;
+import effects.Effect;
 
 public class Main {
 	public static boolean verbose = false;
 	public static playGui.Log log = null;
 	
 	public static void main(String[] args) {
-		int battles = 10000;
-		/*for(int i=0; i<=10; ++i) {
-			Player alice = new Player("Alice", i);
-			alice.selectiveArea = true;
-			Player bob = new Player("Bob", i);
-			bob.multiattack = true;
+		int battles = 100000;
+		for(double i=0; i<=5; i+=1) {Player alice = new Player("Alice", 0);
+			Player bob = new Player("Bob", -i);
+			Effect e = alice.effects.get(0);
+			e.multiattack = true;
 			Team red = new Team(alice);
-			Team blue = new Team(bob);
-			System.out.println(i + "\t" + simulate(red, blue, battles)*100.0/battles);
-		}*/
-		/*Player alice = new Player("Alice");
-		alice.multiattack = true;
-		Player bob = new Player("Bob",-3.8);
+			Team blue = new Team(bob, 4);
+			System.out.printf("%.2f:\t%s%n", i, getWinPercentString(red, blue, battles));
+		}
+		/*Player alice = new Player("Alice", 4);
+		Player bob = new Player("Bob", 4);
+		Effect e = alice.effects.get(0);
+		e.multiattack = true;
 		Team red = new Team(alice);
-		Team blue = new Team(bob, 4);
-		System.out.println(simulate(red, blue, battles)*100.0/battles);*/
-		double powerLevel = 10;
-		Player alice = new Player("Alice", powerLevel);
-		//alice.perception = true;
-		//alice.affliction = new Affliction(Condition.IMPAIRED, Condition.DISABLED, Condition.INCAPACITATED, powerLevel+2, "will");
-		new Affliction(alice, Condition.VULNERABLE, Condition.DEFENSELESS, Condition.INCAPACITATED, powerLevel, powerLevel+2.6, "will");
-		//alice.affliction.cumulative = true;
-		Team red = new Team(new Player("Red", powerLevel), 0);
-		red.add(alice);
-		Player blueMan = new Player("Blue", powerLevel);
-		Team blue = new Team(blueMan, 1);
-		
-		double percentage = simulate(red, blue, battles)*100.0/battles;
+		Team blue = new Team(bob);
+		System.out.println(getWinPercentString(red, blue, battles));*/
+	}
+	
+	public static String getWinPercentString(Team red, Team blue, int battles) {
+		return getWinPercentString(simulate(red, blue, battles), battles);
+	}
+	
+	public static String getWinPercentString(int wins, int battles) {
+		double percentage = wins*100.0/battles;
 		double error = 1.96*percentage*(1-percentage/100)/Math.sqrt(battles);
 		if(percentage == 0.0) {
-			System.out.println("0%");
+			return "0%";
 		} else if(percentage == 100) {
-			System.out.println("100%");
+			return "100%";
 		} else {
 			int places = 1-(int)Math.floor(Math.log10(error));
 			if(places > 0)
-				System.out.printf("%." + places + "f%% ± %." + places + "f%%%n", percentage, error);
+				return String.format("%." + places + "f%% ± %." + places + "f%%", percentage, error);
 			else
-				System.out.println((int)(percentage+.5) + "% ± " + (int)(error+.5) + "%");
+				return String.format((int)(percentage+.5) + "% ± " + (int)(error+.5) + "%");
 		}
 	}
 	
 	public static int simulate(Team red, Team blue, int battles) {
+		//System.out.println(red);
+		//System.out.println(blue);
 		red.enemyTeam = blue;
 		blue.enemyTeam = red;
 		int redWins = 0;

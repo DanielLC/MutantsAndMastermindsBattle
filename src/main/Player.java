@@ -166,6 +166,7 @@ public class Player {
 		this.name = name;
 		this.dodge = dodge;
 		this.parry = parry;
+		this.toughness = toughness;
 		effects = new ArrayList<Effect>(1);
 		effects.add(new Damage(this, attack, damage));
 		this.fortitude = fortitude;
@@ -237,5 +238,9 @@ public class Player {
 				s.append(Condition.values()[i]).append('\n');
 		}
 		return s.toString();
+	}
+	
+	public String toString() {
+		return "Name:\t" + name + "\tDodge:\t" + dodge + "\tParry:\t" + parry + "\tToughness:\t" + toughness + "\tAttack:\t" + effects.get(0).attack + "\tEffect Rank:\t" + effects.get(0).effectRank;
 	}
 }
