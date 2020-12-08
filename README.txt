@@ -1,4 +1,6 @@
-This program is designed to play test simple battles in Mutants and Masterminds by the thousands. That way you can figure out things like how many ranks you can put into Summon until it just isn't fair.
+battlePlayer.jar (or battlePlayer.exe) lets you play a game using team1.txt and team2.txt. You can edit those to change the players.
+
+This program was originally designed to play test simple battles in Mutants and Masterminds by the thousands. That way you can figure out things like how many ranks you can put into Summon until it just isn't fair.
 
 gui.GUI is the main file to run if you want to use the GUI. main.Main is there for hard-coding the battles, which lets you do things like put them in a for loop to look at the results after slight changes. Or just to use features not yet added to the GUI.
 
