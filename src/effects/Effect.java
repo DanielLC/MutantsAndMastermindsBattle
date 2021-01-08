@@ -3,6 +3,7 @@ import java.util.List;
 
 import main.Main;
 import main.Player;
+import main.Stat;
 import main.Team;
 
 public abstract class Effect {
@@ -11,9 +12,10 @@ public abstract class Effect {
 	public boolean multiattack = false;
 	public boolean selectiveArea = false;
 	public boolean perception = false;
-	public boolean ranged = false;
 	public double threatRange = 1;
 	public double effectRank;
+	public byte activeDefense = Stat.PARRY;
+	public byte resistance;
 	public Player user;
 	
 	public Effect(Player user) {
@@ -51,7 +53,8 @@ public abstract class Effect {
 			affect(target, 0);
 			return;
 		}
-		double activeDefense = target.getActiveDefense(ranged);
+		
+		double activeDefense = target.stats[this.activeDefense].val;
 		if(target.minion && !user.minion && attack >= activeDefense) {
 			if(Main.verbose)
 				Main.print(user.name + " hits " + target.name + ", minion, as a routine check");
@@ -188,7 +191,7 @@ public abstract class Effect {
 		if(perception) {
 			s.append("perception ");
 		}
-		if(ranged) {
+		if(activeDefense == Stat.DODGE) {
 			s.append("ranged ");
 		}
 		if(threatRange > 0) {

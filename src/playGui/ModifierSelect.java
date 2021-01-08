@@ -18,6 +18,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicSliderUI;
 
 import main.Player;
+import main.Stat;
 
 public class ModifierSelect extends JPanel {
 	NoPartialFull coverPanel;
@@ -32,11 +33,11 @@ public class ModifierSelect extends JPanel {
 	public void setPlayer(Player player) {
 		powerAttack.setBounds(player.preciseAttack ? -5 : -3, player.powerAttack ? 5 : 3);
 		allOutAttack.setBounds(player.defensiveAttack ? -5 : -3, player.allOutAttack ? 5 : 3);
-		coverPanel.setValue(player.cover);
-		concealmentPanel.setValue(player.concealment);
-		rangePanel.setValue(player.range);
-		powerAttack.setValue(player.powerAttackValue);
-		allOutAttack.setValue(player.allOutAttackValue);
+		coverPanel.setValue((int)player.cover.val);
+		concealmentPanel.setValue((int)player.concealment.val);
+		rangePanel.setValue((int)player.range.val);
+		powerAttack.setValue((int)player.powerAttackValue.val);
+		allOutAttack.setValue((int)player.allOutAttackValue.val);
 	}
 	
 	public ModifierSelect() {
@@ -47,12 +48,7 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		coverPanel = new NoPartialFull();
-		coverPanel.setter = new ValueSetter() {
-			@Override
-			public void setValue(int i) {
-				GUI.gui.player.cover = i;
-			}
-		};
+		coverPanel.setter = new ValueSetter(Stat.COVER);
 		add(coverPanel);
 		add(Box.createVerticalStrut(5));
 		
@@ -60,12 +56,7 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		concealmentPanel = new NoPartialFull();
-		concealmentPanel.setter = new ValueSetter() {
-			@Override
-			public void setValue(int i) {
-				GUI.gui.player.concealment = i;
-			}
-		};
+		concealmentPanel.setter = new ValueSetter(Stat.CONCEALMENT);
 		add(concealmentPanel);
 		add(Box.createVerticalStrut(5));
 		
@@ -73,12 +64,7 @@ public class ModifierSelect extends JPanel {
 		label.setAlignmentX(CENTER_ALIGNMENT);
 		add(label);
 		rangePanel = new NoPartialFull("Short", "Medium", "Long");
-		rangePanel.setter = new ValueSetter() {
-			@Override
-			public void setValue(int i) {
-				GUI.gui.player.range = i;
-			}
-		};
+		rangePanel.setter = new ValueSetter(Stat.RANGE);
 		add(rangePanel);
 		add(Box.createVerticalStrut(15));
 		
@@ -88,28 +74,24 @@ public class ModifierSelect extends JPanel {
 		add(charge);*/
 		
 		powerAttack = new SlidingScale("Precise Attack", "Power Attack");
-		powerAttack.setter = new ValueSetter() {
-			@Override
-			public void setValue(int i) {
-				GUI.gui.player.powerAttackValue = i;
-			}
-		};
+		powerAttack.setter = new ValueSetter(Stat.POWER_ATTACK);
 		add(powerAttack);
 
 		allOutAttack = new SlidingScale("Defensive Attack", "All-Out Attack");
-		allOutAttack.setter = new ValueSetter() {
-			@Override
-			public void setValue(int i) {
-				GUI.gui.player.allOutAttackValue = i;
-			}
-		};
+		allOutAttack.setter = new ValueSetter(Stat.ALL_OUT_ATTACK);
 		add(allOutAttack);
 		
 		add(Box.createVerticalGlue());
 	}
 	
-	private interface ValueSetter {
-		public void setValue(int i);
+	private class ValueSetter {
+		public byte stat;
+		public ValueSetter(byte stat) {
+			this.stat = stat;
+		}
+		public void setValue(int i) {
+			GUI.gui.player.stats[stat].val = i;
+		}
 	}
 	
 	public class NoPartialFull extends JPanel implements ActionListener {

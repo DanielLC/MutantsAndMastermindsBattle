@@ -66,7 +66,13 @@ public class PlayerReader {
 					effect.perception = true;
 					continue;
 				case "ranged":
-					effect.ranged = true;
+					effect.activeDefense = Stat.DODGE;
+					continue;
+				case "resistance":
+					affliction.resistance = Stat.parse(end);
+					continue;
+				case "active defense":
+					affliction.activeDefense = Stat.parse(end);
 					continue;
 				case "":		//Starting a line with a colon is a comment.
 					continue;
@@ -82,9 +88,6 @@ public class PlayerReader {
 						continue;
 					case "degree 3":
 						affliction.degree3 = Condition.valueOf(end.toUpperCase());
-						continue;
-					case "resistance":
-						affliction.resistance = end.toLowerCase();
 						continue;
 					case "cumulative":
 						affliction.cumulative = true;
@@ -108,22 +111,22 @@ public class PlayerReader {
 				players.add(player);
 				break;
 			case "dodge":
-				player.dodge = Double.parseDouble(end);
+				player.dodge.val = Double.parseDouble(end);
 				break;
 			case "parry":
-				player.parry = Double.parseDouble(end);
+				player.parry.val = Double.parseDouble(end);
 				break;
 			case "active defense":
-				player.dodge = Double.parseDouble(end);
-				player.parry = player.dodge;
+				player.dodge.val = Double.parseDouble(end);
+				player.parry.val = player.dodge.val;
 			case "toughness":
-				player.toughness = Double.parseDouble(end);
+				player.toughness.val = Double.parseDouble(end);
 				break;
 			case "fortitude":
-				player.fortitude = Double.parseDouble(end);
+				player.fortitude.val = Double.parseDouble(end);
 				break;
 			case "will":
-				player.will = Double.parseDouble(end);
+				player.will.val = Double.parseDouble(end);
 				break;
 			case "bruises":
 				player.bruises = Integer.parseInt(end);

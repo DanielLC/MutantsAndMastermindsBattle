@@ -9,11 +9,11 @@ import effects.*;
 
 public class Player {
 	public String name;
-	public double dodge;
-	public double parry;
-	public double toughness;
-	public double fortitude;
-	public double will;
+	public Stat dodge;
+	public Stat parry;
+	public Stat toughness;
+	public Stat fortitude;
+	public Stat will;
 	public int bruises;
 	public boolean minion = false;
 	public boolean staggered = false;
@@ -29,19 +29,80 @@ public class Player {
 	public boolean preciseAttack;
 	public boolean allOutAttack;
 	public boolean defensiveAttack;
-	public int powerAttackValue;
-	public int allOutAttackValue;
-	public int cover;
-	public int concealment;
-	public int range;
+	public Stat powerAttackValue;
+	public Stat allOutAttackValue;
+	public Stat cover;
+	public Stat concealment;
+	public Stat range;
+	public Stat[] stats = new Stat[Stat.COUNT];
+	
+	public Player() {
+		effects = new ArrayList<Effect>(1);
+		for(byte i=0; i<Stat.COUNT; ++i) {
+			stats[i] = new Stat(0);
+		}
+		dodge				= stats[Stat.DODGE];
+		parry				= stats[Stat.PARRY];
+		toughness			= stats[Stat.TOUGHNESS];
+		fortitude			= stats[Stat.FORTITUDE];
+		will				= stats[Stat.WILL];
+		powerAttackValue	= stats[Stat.POWER_ATTACK];
+		allOutAttackValue	= stats[Stat.ALL_OUT_ATTACK];
+		cover				= stats[Stat.COVER];
+		concealment			= stats[Stat.CONCEALMENT];
+		range				= stats[Stat.RANGE];
+	}
+	
+	public Player(Player c, Team team, int playerNumber) {
+		this();
+		this.name = c.name + playerNumber;
+		this.dodge = c.dodge;
+		this.parry = c.parry;
+		this.toughness = c.toughness;
+		this.effects = new ArrayList<Effect>(c.effects.size());
+		for(Effect e : c.effects) {
+			effects.add(e);
+		}
+		this.fortitude = c.fortitude;
+		this.will = c.will;
+		this.minion = c.minion;
+		this.team = team;
+	}
+	
+	public Player(String name, double dodge, double parry, double toughness, double attack, double damage, double fortitude, double will) {
+		this();
+		this.name = name;
+		this.dodge.val = dodge;
+		this.parry.val = parry;
+		this.toughness.val = toughness;
+		effects = new ArrayList<Effect>(1);
+		effects.add(new Damage(this, attack, damage));
+		this.fortitude.val = fortitude;
+		this.will.val = will;
+	}
+	
+	public Player(String name) {
+		this();
+		this.name = name;
+		effects = new ArrayList<Effect>(1);
+		//effects.add(new Damage(this, 0, 0));
+	}
+	
+	public Player(String name, double powerLevel) {
+		this(name, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel);
+	}
+	
+	public Player(double powerLevel) {
+		this("", powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel);
+	}
 	
 	public double getAttackModifier() {
-		return -powerAttackValue - range;
+		return -powerAttackValue.val - range.val;
 		//Charge attacks will need to be added too, and maybe some other custom modifiers. Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
 	}
 	
 	public double getEffectModifier() {
-		return powerAttackValue + allOutAttackValue;
+		return powerAttackValue.val + allOutAttackValue.val;
 		//Impaired and disabled are not included, since they're added at the end to all checks, attack or otherwise.
 	}
 	
@@ -105,7 +166,7 @@ public class Player {
 	}
 	
 	public double getDodge() {
-		double total = dodge;
+		double total = dodge.val;
 		if(conditions[Condition.DEFENSELESS.ordinal()] > 0) {
 			total = 0;
 		} else if(conditions[Condition.VULNERABLE.ordinal()] > 0) {
@@ -114,13 +175,13 @@ public class Player {
 		if(conditions[Condition.PRONE.ordinal()] > 0) {
 			total -= 5;
 		}
-		total += concealment;		//TODO: Concealment shouldn't help against area attacks. I'm going to need to change stuff to make that work. It's just supposed to subtract from the attack of the attack, not improve your dodge.
-		total += cover;				//TODO: This one does help against area attacks, but it has that explicitly. Theoretically, there should be times where this doesn't work.
+		total += concealment.val;		//TODO: Concealment shouldn't help against area attacks. I'm going to need to change stuff to make that work. It's just supposed to subtract from the attack of the attack, not improve your dodge.
+		total += cover.val;				//TODO: This one does help against area attacks, but it has that explicitly. Theoretically, there should be times where this doesn't work.
 		return total;
 	}
 	
 	public double getParry() {
-		double total = parry;
+		double total = parry.val;
 		if(conditions[Condition.DEFENSELESS.ordinal()] > 0) {
 			total = 0;
 		} else if(conditions[Condition.VULNERABLE.ordinal()] > 0) {
@@ -141,54 +202,6 @@ public class Player {
 	
 	public boolean isDefenseless() {
 		return conditions[Condition.DEFENSELESS.ordinal()] > 0;
-	}
-	
-	public double getToughness() {
-		return toughness - bruises;
-	}
-	
-	public Player(Player c, Team team, int playerNumber) {
-		this.name = c.name + playerNumber;
-		this.dodge = c.dodge;
-		this.parry = c.parry;
-		this.toughness = c.toughness;
-		this.effects = new ArrayList<Effect>(c.effects.size());
-		for(Effect e : c.effects) {
-			effects.add(e);
-		}
-		this.fortitude = c.fortitude;
-		this.will = c.will;
-		this.minion = c.minion;
-		this.team = team;
-	}
-	
-	public Player(String name, double dodge, double parry, double toughness, double attack, double damage, double fortitude, double will) {
-		this.name = name;
-		this.dodge = dodge;
-		this.parry = parry;
-		this.toughness = toughness;
-		effects = new ArrayList<Effect>(1);
-		effects.add(new Damage(this, attack, damage));
-		this.fortitude = fortitude;
-		this.will = will;
-	}
-	
-	public Player(String name) {
-		this.name = name;
-		effects = new ArrayList<Effect>(1);
-		//effects.add(new Damage(this, 0, 0));
-	}
-	
-	public Player() {
-		this("");
-	}
-	
-	public Player(String name, double powerLevel) {
-		this(name, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel);
-	}
-	
-	public Player(double powerLevel) {
-		this("", powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel, powerLevel);
 	}
 	
 	public void reset() {
@@ -222,7 +235,7 @@ public class Player {
 	public void dodgeArea(Effect effect) {
 		if(Main.verbose)
 			Main.print(name + " rolls to dodge area " + effect.name);
-		int degree = check(dodge, effect.effectRank + 10);
+		int degree = check(dodge.val, effect.effectRank + 10);
 		if(degree >= 0) {	//Successful dodge
 			effect.affect(this, Math.max(Math.floor(effect.effectRank/2),1) - effect.effectRank);	//Half effect rounded down to minimum of 1
 			//effect.affect(this, -5);	//Much better way of doing it

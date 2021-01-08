@@ -7,29 +7,18 @@ public class AfflictionInstance {
 	public Player target;
 	public Condition currentCondition = Condition.NULL;
 	public int currentDegree = 0;
-	public double defenseRank;
 	public double effectiveRank;
 	
 	public AfflictionInstance(Affliction affliction, Player target) {
 		this.affliction = affliction;
 		this.target = target;
-		switch(affliction.resistance) {
-		case "fortitude":
-			this.defenseRank = target.fortitude;
-			break;
-		case "will":
-			this.defenseRank = target.will;
-			break;
-		default:
-			throw new RuntimeException("Error: resistance '" + affliction.resistance + "' not found.");
-		}
 	}
 	
 	public void activeResist(double modifier) {	//Used when attacked
 		this.effectiveRank = affliction.effectRank + modifier;
 		if(Main.verbose)
 			Main.print(target.name + " rolls to actively resist " + affliction.name);
-		int degree = target.check(defenseRank, effectiveRank+10);
+		int degree = target.check(target.stats[affliction.resistance].val, effectiveRank+10);
 		if(affliction.cumulative && currentDegree < 0) {
 			//System.out.println("Degree: " + degree + "\tCurrent Degree: " + currentDegree);
 			degree += currentDegree;
@@ -49,7 +38,7 @@ public class AfflictionInstance {
 	public void passiveResist() {	//Used at the end of defenders turn
 		if(Main.verbose)
 			Main.print(target.name + " rolls to passively resist " + affliction.name);
-		int degree = target.check(defenseRank, effectiveRank+10);
+		int degree = target.check(target.stats[affliction.resistance].val, effectiveRank+10);
 		if(degree >= 0) {
 			setCondition(Condition.NULL);
 		}

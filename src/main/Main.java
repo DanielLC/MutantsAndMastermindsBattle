@@ -12,21 +12,21 @@ public class Main {
 	
 	public static void main(String[] args) {
 		int battles = 100000;
-		for(double i=0; i<=5; i+=1) {Player alice = new Player("Alice", 0);
+		/*for(double i=0; i<=5; i+=1) {Player alice = new Player("Alice", 0);
 			Player bob = new Player("Bob", -i);
 			Effect e = alice.effects.get(0);
 			e.multiattack = true;
 			Team red = new Team(alice);
 			Team blue = new Team(bob, 4);
 			System.out.printf("%.2f:\t%s%n", i, getWinPercentString(red, blue, battles));
-		}
-		/*Player alice = new Player("Alice", 4);
-		Player bob = new Player("Bob", 4);
-		Effect e = alice.effects.get(0);
-		e.multiattack = true;
-		Team red = new Team(alice);
-		Team blue = new Team(bob);
-		System.out.println(getWinPercentString(red, blue, battles));*/
+		}*/
+		double alicePL = -1;
+		Player alice = new Player("Alice", alicePL);
+		Player bob = new Player("Bob", 0);
+		alice.effects.set(0, new Affliction(alice, Condition.NULL, Condition.INCAPACITATED, Condition.INCAPACITATED, alicePL, alicePL, Stat.TOUGHNESS));
+		Team blue = new Team(alice);
+		Team red = new Team(bob);
+		System.out.println(getWinPercentString(red, blue, battles));
 	}
 	
 	public static String getWinPercentString(Team red, Team blue, int battles) {

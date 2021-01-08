@@ -2,6 +2,7 @@ package effects;
 
 import main.Main;
 import main.Player;
+import main.Stat;
 
 public class Damage extends Effect {
 	
@@ -9,17 +10,19 @@ public class Damage extends Effect {
 		super(user);
 		this.attack = attack;
 		this.effectRank = effectRank;
+		this.resistance = Stat.TOUGHNESS;
 	}
 
 	public Damage(Player user) {
 		super(user);
+		this.resistance = Stat.TOUGHNESS;
 	}
 
 	@Override
 	public void affect(Player target, double modifier) {
 		if(Main.verbose)
 			Main.print(target.name + " rolls to resist Damage");
-		int degree = target.check(target.getToughness(), effectRank + modifier + 15);
+		int degree = target.check(target.stats[resistance].val-target.bruises, effectRank + modifier + 15);
 		if(degree >= 0) {		//Made save
 			if(Main.verbose)
 				Main.print(target.name + " tanks the damage");

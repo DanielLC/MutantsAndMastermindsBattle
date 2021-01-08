@@ -1,15 +1,15 @@
 package effects;
 
 import main.Player;
+import main.Stat;
 
 public class Affliction extends Effect {
 	public Condition degree1;
 	public Condition degree2;
 	public Condition degree3;
-	public String resistance;	//TODO: Maybe change this to an enum?
 	public boolean cumulative = false;
 	
-	public Affliction(Player user, Condition degree1, Condition degree2, Condition degree3, double attack, double effectRank, String resistance) {
+	public Affliction(Player user, Condition degree1, Condition degree2, Condition degree3, double attack, double effectRank, byte resistance) {
 		super(user);
 		this.degree1 = degree1;
 		this.degree2 = degree2;
