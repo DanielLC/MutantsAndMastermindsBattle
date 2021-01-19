@@ -35,6 +35,7 @@ public class PlayerReader {
 		Affliction affliction = null;
 		Effect effect = null;
 		Scanner s = new Scanner(file);
+		whileloop:
 		while(s.hasNext()) {
 			String nextLine = s.nextLine();
 			if(nextLine.matches("^\\s*$"))		//If it's all whitespace, skip to the next line.
@@ -157,6 +158,7 @@ public class PlayerReader {
 				effect = damage;
 				effect.name = end;
 				player.effects.add(effect);
+				System.out.println(player.name + " has " + end);
 				break;
 			case "affliction":
 				affliction = new Affliction(player);
@@ -164,6 +166,10 @@ public class PlayerReader {
 				effect.name = end;
 				player.effects.add(effect);
 				break;
+			case "initiative":
+				player.initiative = Double.parseDouble(end);
+			case "end":		//End finishes reading the file and ignores anything after.
+				break whileloop;
 			case "":		//Starting a line with a colon is a comment.
 				continue;
 			default:

@@ -1,12 +1,6 @@
-battlePlayer.jar (or battlePlayer.exe) lets you play a game using team1.txt and team2.txt. You can edit those to change the players.
+You can use this by setting up teams in team1.txt and team2.txt. The file battleSim.exe will run the battle the given number of times and show the result. The program battleSim.exe runs a single game, which you can control. It's meant to be useful for a GM.
 
-This program was originally designed to play test simple battles in Mutants and Masterminds by the thousands. That way you can figure out things like how many ranks you can put into Summon until it just isn't fair.
-
-gui.GUI is the main file to run if you want to use the GUI. main.Main is there for hard-coding the battles, which lets you do things like put them in a for loop to look at the results after slight changes. Or just to use features not yet added to the GUI.
-
-If you aren't familiar with programming, you can just download battleSim.jar and run that to use the GUI.
-
-The battles randomize the turns, but assume you attack the members in the opposing team in order. This lets you test out who to target first, but is a problem if you want a non-optimal game where characters attack each other more randomly. I'll probably add that as option eventually.
+The battles roll initiative to decide the turn order, but always attacks in the order the players are listed in the team files. This lets you test out who to target first, but is a problem if you want a non-optimal game where characters attack each other more randomly. I'll probably add that as option eventually.
 
 I'm not sure how the resistance check for afflictions is supposed to work if the effect is used twice with different modifiers (such as +5 for critical hit). Currently I have it just overwrite it with the last value.
 
@@ -34,9 +28,9 @@ Here's a table of how likely you are to win vs a character some number of PL low
 
 * Putting an extra point in Toughness and one less in the active defenses (or equivalently, an extra point in damage and one less in accuracy) lets you win 53.824% ± 0.049% of the time.
 
-* The idea amount of Damage is 4 more than your opponent's Toughness (assuming the same PL), winning 59.314% ± 0.047% of the time. The ideal amount of Toughness is as far from 4 less than you're opponents Damage in either direction.
+* The idea amount of Damage is 4 more than your opponent's Toughness (assuming the same PL), winning 59.314% ± 0.047% of the time. The ideal amount of Toughness is as far as possible from 4 less than your opponent's Damage in either direction.
 
-* Perception wins 69.742% ± 0.041% of the time. Equivelent to on PL higher.
+* Perception wins 69.742% ± 0.041% of the time. Equivalent to on PL higher.
 
 * Two characters working together are evenly matched against one 2.4 power levels higher.
 

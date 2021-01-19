@@ -1,4 +1,5 @@
 Player:		Battlesuit
+Initiative:	1
 Active Defense:	8
 Toughness:	12
 Fortitude:	6
@@ -12,6 +13,7 @@ Damage:		Unarmed
 	Rank:		12
 
 Player:		Construct
+Initiative:	3
 Active Defense:	9
 Toughness:	11
 Fortitude:	Infinity
@@ -25,6 +27,7 @@ Damage:		Ranged
 	Ranged
 
 Player:		Crime Fighter
+Initiative:	6
 Active Defense:	12
 Toughness:	8		:5 without active defense
 Fortitude:	6

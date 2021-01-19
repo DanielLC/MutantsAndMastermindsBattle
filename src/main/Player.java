@@ -24,7 +24,8 @@ public class Player {
 	public Hashtable<Affliction, AfflictionInstance> afflictions = new Hashtable<Affliction, AfflictionInstance>();
 	public List<Effect> effects;
 	public double initiative;
-	public double initiativeRoll;
+	public int initiativeRoll;
+	public double initiativeRollFractionalPart;
 	public boolean powerAttack;
 	public boolean preciseAttack;
 	public boolean allOutAttack;
@@ -107,7 +108,9 @@ public class Player {
 	}
 	
 	public void rollInitiative() {
-		initiativeRoll = initiative + roll();
+		initiativeRollFractionalPart = initiative + roll();
+		initiativeRoll = (int)Math.floor(initiativeRollFractionalPart);
+		initiativeRollFractionalPart -= initiativeRoll;
 	}
 	
 	//Returns the modifier on all checks from disabled or impaired.
