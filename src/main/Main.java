@@ -62,9 +62,11 @@ public class Main {
 			for(Player player : order) {
 				//++turns;
 				player.takeTurn();
-				if(player.team.enemyTeam.getMembersRemaining() == 0) {
-					if(player.team == red)
-						++redWins;
+				if(red.getMembersRemaining() == 0) {
+					break;
+				}
+				if(blue.getMembersRemaining() == 0) {
+					++redWins;
 					break;
 				}
 			}

@@ -4,6 +4,54 @@ The battles roll initiative to decide the turn order, but always attacks in the 
 
 I'm not sure how the resistance check for afflictions is supposed to work if the effect is used twice with different modifiers (such as +5 for critical hit). Currently I have it just overwrite it with the last value.
 
+The supported stats are:
+
+General:
+
+Player:				Set the name of the player and start their stats.
+Dodge
+Parry
+Active defense:		Sets Dodge and Parry to that value. Useful when they're the same, which they almost always are because of how power levels work.
+Toughness
+Fortitude
+Will
+Bruises:			Sets the number of -1 modifiers to Toughness they start with. This will be useful if it ever becomes possible to save characters in the middle of the fight.
+Minion
+Staggered:			Like bruises, not useful now, but might come in handy later.
+Incapacitated:		Same.
+Power attack
+Precise attack
+All-out attack
+Defensive attack
+Damage:				Set the name of the Damage power, and the next lines give its stats.
+Affliction:			Set the name of the Affliction power, and the next lines give its stats.
+Initiative
+
+Attacks (Affliction or Damage):
+
+Attack:				Sets the attack modifier.
+Rank:				Sets the rank of an attack.
+Threat range:		Sets the threat range. Default is 1. One rank of dangerous gives 2, etc.
+Dangerous:			Number of ranks of Dangerous. Sets threat range to one more than the value given.
+Improved critical	Same as Dangerous.
+Multiattack
+Area
+Perception
+Ranged:				Sets the active defense to Dodge, rather than the default Parry.
+Resistance:			Sets the resistance. Damage defaults to Toughness. Affliction does not have a default, and will crash if one is not given. Must be Toughness, Fortitude, Will, Dodge, or Parry.
+Active defense:		Sets the active defense. Default is Parry. Must be Toughness, Fortitude, Will, Dodge, or Parry.
+
+Afflictions:
+
+Degree 1:			Sets the condition for the first degree of failure. Can be Null (if it does nothing), Dazed, Hindered, Impaired, Vulnerable, Compelled, Defenseless, Disabled, Stunned, Immobile, Prone, Controlled, and Incapacitated.
+Only Hindered, Vulnerable Defenselss, Disabled, and Incapacitated are actually implemented in battleSime.exe.
+Degree 2:			Sets the condition for the second degree of failure. Same condtions as Degree 1.
+Degree 3:			Sets the condition for the second degree of failure. Same condtions as Degree 1.
+Cumulative
+Progressive
+Instant recovery
+Limited degree:		Sets the third degree to be the same as second degree. As a result of how this is implemented, you have to set it after setting the second egree.
+
 Here's some things I've found so far:
 
 Here's a table of how likely you are to win vs a character some number of PL lower:

@@ -57,6 +57,10 @@ public class PlayerReader {
 				case "threat range":
 					effect.threatRange = Double.parseDouble(end);
 					continue;
+				case "dangerous":
+				case "improved critical":
+					effect.threatRange = Double.parseDouble(end)+1;
+					continue;
 				case "multiattack":
 					effect.multiattack = true;
 					continue;
@@ -92,6 +96,15 @@ public class PlayerReader {
 						continue;
 					case "cumulative":
 						affliction.cumulative = true;
+						continue;
+					case "progressive":
+						affliction.progressive = true;
+						continue;
+					case "instant recovery":
+						affliction.instantRecovery = true;
+						continue;
+					case "limited degree":
+						affliction.degree3 = affliction.degree2;
 						continue;
 					case "":		//Starting a line with a colon is a comment.
 						continue;
@@ -158,7 +171,6 @@ public class PlayerReader {
 				effect = damage;
 				effect.name = end;
 				player.effects.add(effect);
-				System.out.println(player.name + " has " + end);
 				break;
 			case "affliction":
 				affliction = new Affliction(player);
@@ -169,6 +181,7 @@ public class PlayerReader {
 			case "initiative":
 				player.initiative = Double.parseDouble(end);
 			case "end":		//End finishes reading the file and ignores anything after.
+				//System.out.println("End");
 				break whileloop;
 			case "":		//Starting a line with a colon is a comment.
 				continue;

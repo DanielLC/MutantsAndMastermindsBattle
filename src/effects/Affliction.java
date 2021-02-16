@@ -8,6 +8,8 @@ public class Affliction extends Effect {
 	public Condition degree2;
 	public Condition degree3;
 	public boolean cumulative = false;
+	public boolean progressive = false;
+	public boolean instantRecovery = false;
 	
 	public Affliction(Player user, Condition degree1, Condition degree2, Condition degree3, double attack, double effectRank, byte resistance) {
 		super(user);
