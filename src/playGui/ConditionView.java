@@ -35,8 +35,30 @@ public class ConditionView extends JPanel {
 		add(Box.createVerticalGlue());
 	}
 	
+	private String getRegenText(Player player) {
+		int turnsRemaining = player.regenTurnsRemaining();
+		if(turnsRemaining > 0)
+			return "Await regen (" + turnsRemaining + " turns remaining)";
+		else
+			return "Regenerate";
+	}
+	
 	public void setPlayer(Player player) {
 		removeAll();
+		if(player.regenRank > 0 && (player.bruises > 0 || player.staggered)) {
+			JToggleButton regen = new JToggleButton(getRegenText(player));
+			regen.setAlignmentX(CENTER_ALIGNMENT);
+			regen.addItemListener(new ItemListener() {
+				@Override
+				public void itemStateChanged(ItemEvent e) {
+					if(e.getStateChange() == ItemEvent.SELECTED) {
+						player.regen();
+						regen.setText(getRegenText(player));
+					}
+				}
+			});
+			add(regen);
+		}
 		for(AfflictionInstance afflictionInstance : player.afflictions.values()) {
 			if(afflictionInstance.currentCondition == Condition.NULL)
 				break;

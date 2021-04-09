@@ -31,7 +31,6 @@ public class PlayerReader {
 	public static Team read(File file) throws FileNotFoundException {
 		Team players = new Team();
 		Player player = null;
-		Damage damage = null;
 		Affliction affliction = null;
 		Effect effect = null;
 		Scanner s = new Scanner(file);
@@ -110,12 +109,11 @@ public class PlayerReader {
 						continue;
 					}
 				}
-				//There's no Damge-specific variables, so I don't need to worry about that.
+				//There's no Damage-specific variables, so I don't need to worry about that.
 				//If it's not one of these, they must be done with the effect. So I set that to null and fall through to the player variables.
 				
 				effect = null;
 				affliction = null;
-				damage = null;
 			}
 			
 			switch(start) {
@@ -123,6 +121,8 @@ public class PlayerReader {
 				player = new Player();
 				player.name = end;
 				players.add(player);
+				effect = null;
+				affliction = null;
 				break;
 			case "dodge":
 				player.dodge.val = Double.parseDouble(end);
@@ -167,8 +167,7 @@ public class PlayerReader {
 				player.defensiveAttack = true;
 				break;
 			case "damage":
-				damage = new Damage(player);
-				effect = damage;
+				effect = new Damage(player);
 				effect.name = end;
 				player.effects.add(effect);
 				break;
@@ -180,6 +179,22 @@ public class PlayerReader {
 				break;
 			case "initiative":
 				player.initiative = Double.parseDouble(end);
+				break;
+			case "regeneration":
+				player.regenRank = Integer.parseInt(end);
+				break;
+			case "power level":		//This sets the player's defenses all to that level and automatically gives them an attack at that level (which you can add stuff to).
+				double powerLevel = Double.parseDouble(end);
+				player.dodge.val = powerLevel;
+				player.parry.val = powerLevel;
+				player.will.val = powerLevel;
+				player.fortitude.val = powerLevel;
+				player.toughness.val = powerLevel;
+				effect = new Damage(player);
+				effect.name = "Damage";
+				effect.attack = powerLevel;
+				effect.effectRank = powerLevel;
+				player.effects.add(effect);
 			case "end":		//End finishes reading the file and ignores anything after.
 				//System.out.println("End");
 				break whileloop;

@@ -36,6 +36,8 @@ public class Player {
 	public Stat concealment;
 	public Stat range;
 	public Stat[] stats = new Stat[Stat.COUNT];
+	public int regenRank;
+	public int regenStatus;
 	
 	public Player() {
 		effects = new ArrayList<Effect>(1);
@@ -217,7 +219,38 @@ public class Player {
 		}
 	}
 	
+	//TODO: Add dazed
+	public void regen() {
+		if(regenRank <= 0)
+			return;
+		regenStatus += regenRank;
+		while(regenStatus >= 10) {
+			if(bruises > 0) {
+				--bruises;
+				if(Main.verbose)
+					Main.print(name + " Regenerates from a bruise");
+			} else if(staggered) {
+				staggered = false;
+				if(Main.verbose)
+					Main.print(name + " Regenerates from the Staggered condition");
+			} else {
+				regenStatus = 0;
+				return;
+			}
+			regenStatus -= 10;
+		}
+		if(bruises <= 0 && !staggered) {
+			regenStatus = 0;
+			return;
+		}
+	}
+	
+	public int regenTurnsRemaining() {
+		return (9-regenStatus)/regenRank;
+	}
+	
 	public void takeTurn() {
+		regen();
 		if(staggered && recoveryRemaining) {
 			staggered = false;
 			recoveryRemaining = false;

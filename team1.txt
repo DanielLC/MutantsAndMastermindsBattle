@@ -21,6 +21,7 @@ Will:		9
 Damage:		Unarmed
 	Attack:		9
 	Rank:		11
+Regeneration:	10	:Choose between this and Ranged Damage.
 Damage:		Ranged
 	Attack:		8
 	Rank:		10
