@@ -9,12 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
-import javax.swing.JTextArea;
 
 import fileio.PlayerReader;
 import main.*;
 
 public class GUI extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public TurnSelect turnSelect;
 	public ModifierSelect modifierSelect;
 	public TargetSelect targetSelect;

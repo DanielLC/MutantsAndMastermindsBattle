@@ -2,7 +2,6 @@ package gui;
 
 import java.awt.Button;
 import java.awt.Dimension;
-import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,6 +13,10 @@ import javax.swing.JTextField;
 import main.*;
 
 public class TeamGUI extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Team team;
 	private JTextField header;
 	

@@ -1,10 +1,7 @@
 package main;
 
-import java.io.PrintStream;
-
 import effects.Affliction;
 import effects.Condition;
-import effects.Effect;
 
 public class Main {
 	public static boolean verbose = false;

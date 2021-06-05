@@ -16,6 +16,10 @@ import fileio.PlayerReader;
 import main.*;
 
 public class GUI extends JFrame {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Team team1;
 	private Team team2;
 	private JLabel results1;

@@ -9,6 +9,10 @@ import javax.swing.JToggleButton;
 
 public class AttackButton extends JToggleButton implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static JToggleButton dummy;
 	private static AttackButton singleton;
 	private static HashSet<Object> notReady = new HashSet<Object>();

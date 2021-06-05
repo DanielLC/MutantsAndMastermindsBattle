@@ -26,6 +26,7 @@ Defensive attack
 Damage:				Set the name of the Damage power, and the next lines give its stats.
 Affliction:			Set the name of the Affliction power, and the next lines give its stats.
 Initiative
+Copies:				Adds the given number of copies of this player to the team. This must be the last attribute added.
 
 Attacks (Affliction or Damage):
 
@@ -44,13 +45,13 @@ Active defense:		Sets the active defense. Default is Parry. Must be Toughness, F
 Afflictions:
 
 Degree 1:			Sets the condition for the first degree of failure. Can be Null (if it does nothing), Dazed, Hindered, Impaired, Vulnerable, Compelled, Defenseless, Disabled, Stunned, Immobile, Prone, Controlled, and Incapacitated.
-Only Hindered, Vulnerable Defenselss, Disabled, and Incapacitated are actually implemented in battleSime.exe.
-Degree 2:			Sets the condition for the second degree of failure. Same condtions as Degree 1.
-Degree 3:			Sets the condition for the second degree of failure. Same condtions as Degree 1.
+Only Hindered, Vulnerable Defenseless, Disabled, and Incapacitated are actually implemented in battleSime.exe.
+Degree 2:			Sets the condition for the second degree of failure. Same conditions as Degree 1.
+Degree 3:			Sets the condition for the second degree of failure. Same conditions as Degree 1.
 Cumulative
 Progressive
 Instant recovery
-Limited degree:		Sets the third degree to be the same as second degree. As a result of how this is implemented, you have to set it after setting the second egree.
+Limited degree:		Sets the third degree to be the same as second degree. As a result of how this is implemented, you have to set it after setting the second degree.
 
 Here's some things I've found so far:
 

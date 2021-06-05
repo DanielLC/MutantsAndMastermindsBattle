@@ -15,6 +15,10 @@ import javax.swing.JPanel;
 import main.Player;
 
 public class CharacterGUI extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Player character;
 	private TextField activeDefense;
 	private TextField toughness;

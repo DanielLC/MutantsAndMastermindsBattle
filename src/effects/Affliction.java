@@ -1,7 +1,6 @@
 package effects;
 
 import main.Player;
-import main.Stat;
 
 public class Affliction extends Effect {
 	public Condition degree1;

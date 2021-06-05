@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,6 +16,10 @@ import javax.swing.JPanel;
 import main.Main;
 
 public class GUI extends JFrame implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private TeamGUI team1;
 	private TeamGUI team2;
 	private TextField battles;
@@ -49,7 +52,7 @@ public class GUI extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) {
-		GUI gui = new GUI();
+		new GUI();
 	}
 
 	@Override

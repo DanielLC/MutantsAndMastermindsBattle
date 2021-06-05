@@ -1,6 +1,5 @@
 package playGui;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -8,10 +7,8 @@ import java.awt.event.ItemListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JToggleButton;
 
 import effects.AfflictionInstance;
@@ -19,6 +16,10 @@ import effects.Condition;
 import main.*;
 
 public class ConditionView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton endTurn;
 	
 	public ConditionView() {

@@ -17,6 +17,10 @@ import main.Player;
 import main.Team;
 
 public class TargetSelect extends JPanel implements ItemListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<JToggleButton> buttons = new ArrayList<>();
 	private ArrayList<Player> players = new ArrayList<>();
 	private ButtonGroup group;

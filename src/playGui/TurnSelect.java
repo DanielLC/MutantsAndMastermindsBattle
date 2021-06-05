@@ -13,7 +13,10 @@ import javax.swing.JToggleButton;
 import main.*;
 
 public class TurnSelect extends JPanel {
-	private TurnOrder turnOrder;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ButtonGroup playerGroup;
 	private Player currentPlayer;
 	
@@ -78,6 +81,10 @@ public class TurnSelect extends JPanel {
 	}
 	
 	private class TurnPane extends JPanel {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private Player player;
 		public JToggleButton playerButton;
 		private TurnSelect parent;

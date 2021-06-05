@@ -13,6 +13,10 @@ import effects.Effect;
 import effects.RecoverAction;
 
 public class AttackSelect extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public Effect selected = null;
 	private ButtonGroup bg = new ButtonGroup();
 	

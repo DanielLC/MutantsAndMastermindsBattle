@@ -21,6 +21,10 @@ import main.Player;
 import main.Stat;
 
 public class ModifierSelect extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	NoPartialFull coverPanel;
 	NoPartialFull concealmentPanel;
 	NoPartialFull rangePanel;
@@ -95,6 +99,10 @@ public class ModifierSelect extends JPanel {
 	}
 	
 	public class NoPartialFull extends JPanel implements ActionListener {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private JToggleButton no;
 		private JToggleButton partial;
 		private JToggleButton full;
@@ -159,6 +167,10 @@ public class ModifierSelect extends JPanel {
 	}
 	
 	public class SlidingScale extends JPanel implements ChangeListener {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		private JSlider slider;
 		public ValueSetter setter;
 		

@@ -124,6 +124,11 @@ public class PlayerReader {
 				effect = null;
 				affliction = null;
 				break;
+			case "copies":
+				int count = Integer.parseInt(end);
+				for(int i=2; i<=count; ++i) {
+					players.add(new Player(player, players, i));
+				}
 			case "dodge":
 				player.dodge.val = Double.parseDouble(end);
 				break;
@@ -195,6 +200,7 @@ public class PlayerReader {
 				effect.attack = powerLevel;
 				effect.effectRank = powerLevel;
 				player.effects.add(effect);
+				break;
 			case "end":		//End finishes reading the file and ignores anything after.
 				//System.out.println("End");
 				break whileloop;
